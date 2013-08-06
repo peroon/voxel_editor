@@ -1,3 +1,5 @@
+demo : http://peroon.github.io/voxel_editor
+
 voxel editor made by JS (mainly three.js)
 
 The project is mainly developed in gh-pages branch.
