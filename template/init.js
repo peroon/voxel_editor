@@ -1,50 +1,45 @@
 //scene
 var scene = new THREE.Scene();
-var width = window.innerWidth;
-var height = window.innerHeight;
+var WIDTH= window.innerWidth;
+var HEIGHT= window.innerHeight;
 
 //camera
-var camera = new THREE.PerspectiveCamera(75, width/height, 0.1, 1000);
+var camera = new THREE.PerspectiveCamera(75, WIDTH/HEIGHT, 0.1, 1000);
 camera.position.x = 5;
 camera.position.y = 5;
 camera.position.z = -5;
 
+//light
+var lightColor = 0xeeeeee;
+
+//directional light
+var directionalLight = new THREE.DirectionalLight(lightColor, 3 );
+directionalLight.position.z = 10;
+scene.add(directionalLight);
+
+//ambient light
+var ambientLight = new THREE.AmbientLight(lightColor);
+scene.add(ambientLight);
+
 //renderer
 var renderer = new THREE.WebGLRenderer();
-renderer.setSize(width, height);
+renderer.setSize(WIDTH, HEIGHT);
 document.body.appendChild(renderer.domElement);
 
-//object
+//cube1
 var geometry = new THREE.CubeGeometry(1,1,1);
 var material = new THREE.MeshBasicMaterial({color: 0x009900});
 var cube = new THREE.Mesh(geometry, material);
 scene.add(cube);
 camera.lookAt(cube.position);
 
+//cube2
 var geometry2 = new THREE.CubeGeometry(1,1,1);
 var material2 = new THREE.MeshLambertMaterial( { color: 0x66ffff } );
 var cube2 = new THREE.Mesh(geometry2, material2);
 cube2.position.set(3,0,0);
 scene.add(cube2);
 
-//light
-var directionalLight = new THREE.DirectionalLight( 0xeeeeee, 10 );
-directionalLight.position.z = 10;
-scene.add( directionalLight );
-
-//axis
-var lineMaterial = new THREE.LineBasicMaterial({
-        color: 0x0000ff
-    });
-var lineGeometry = new THREE.Geometry();
-    lineGeometry.vertices.push(new THREE.Vector3(-10, 0, 0));
-    lineGeometry.vertices.push(new THREE.Vector3(0, 0, 0));
-    lineGeometry.vertices.push(new THREE.Vector3(10, 0, 0));
-var line = new THREE.Line(lineGeometry, lineMaterial);
-scene.add(line);
-
-var line2 = getAxis();
-//scene.add(line2);
 
 //grid
 var gridWidth = 128;
@@ -64,18 +59,11 @@ scene.add(lineX);
 scene.add(lineY);
 scene.add(lineZ);
 
-//plane
- var map1 = THREE.ImageUtils.loadTexture( 'sand.jpg' );
-map1.wrapS = map1.wrapT = THREE.RepeatWrapping;
-map1.repeat.set( 4, 4 );
-var sandWidth = 8;
-var sandGeometry = new THREE.PlaneGeometry(sandWidth, sandWidth, sandWidth, sandWidth);
+//fog
+var fogColor = 0xAA9966;
+scene.fog = new THREE.FogExp2( fogColor, 0.015 );
 
-sand = new THREE.Mesh(
-    sandGeometry,
-    new THREE.MeshLambertMaterial( { map: map1 } )
-);
-sand.rotation.x = Math.PI / -2;
-sand.castShadow = true;
-sand.receiveShadow = true;
+//sand plane
+var sand = getSand();
+// sand.position.y -= 1;
 scene.add(sand);
