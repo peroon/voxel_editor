@@ -13,7 +13,7 @@ camera.position.z = -5;
 var lightColor = 0xeeeeee;
 
 //directional light
-var directionalLight = new THREE.DirectionalLight(lightColor, 3 );
+var directionalLight = new THREE.DirectionalLight(lightColor, 2 );
 directionalLight.position.z = 10;
 scene.add(directionalLight);
 
@@ -40,6 +40,10 @@ var cube2 = new THREE.Mesh(geometry2, material2);
 cube2.position.set(3,0,0);
 scene.add(cube2);
 
+//image cube
+var imageCube = getImageCube();
+imageCube.position.set(-3,0,0);
+scene.add(imageCube);
 
 //grid
 var gridWidth = 128;
