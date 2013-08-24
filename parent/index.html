@@ -1,0 +1,47 @@
+<style>
+	canvas { 
+		width:  100%;
+		height: 100%;
+	}
+</style>
+
+<body>
+<script src="../three.js"></script>
+<script>
+	//init
+	var scene = new THREE.Scene();
+	var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+	var renderer = new THREE.WebGLRenderer();
+	renderer.setSize(window.innerWidth, window.innerHeight);
+	document.body.appendChild(renderer.domElement);
+
+	//parent
+	var parent = new THREE.Object3D();
+	scene.add(parent);
+
+	//child
+	var geometry = new THREE.CubeGeometry(1,1,1);
+	var material = new THREE.MeshBasicMaterial({color: 0x0000ff});
+	var cube0 = new THREE.Mesh(geometry, material);
+	var cube1 = new THREE.Mesh(geometry, material);
+	var cube2 = new THREE.Mesh(geometry, material);
+	cube0.position.x = -2;
+	cube1.position.x =  0;
+	cube2.position.x =  2;
+	parent.add(cube0);
+	parent.add(cube1);
+	parent.add(cube2);
+
+	camera.position.z = 5;
+
+	var render = function () {
+		requestAnimationFrame(render);
+
+		parent.rotation.y += 0.1;
+
+		renderer.render(scene, camera);
+	};
+
+	render();
+</script>
+</body>
