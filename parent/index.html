@@ -23,8 +23,8 @@
 	var geometry = new THREE.CubeGeometry(1,1,1);
 	var material = new THREE.MeshBasicMaterial({color: 0x0000ff});
 	var cube0 = new THREE.Mesh(geometry, material);
-	var cube1 = new THREE.Mesh(geometry, material);
-	var cube2 = new THREE.Mesh(geometry, material);
+	var cube1 = cube0.clone();
+	var cube2 = cube0.clone();
 	cube0.position.x = -2;
 	cube1.position.x =  0;
 	cube2.position.x =  2;
