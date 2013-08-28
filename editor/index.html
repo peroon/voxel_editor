@@ -2,6 +2,7 @@
 	<script src="../three.js"></script>
 	<script src="../js/Detector.js"></script>
 	<script src="../js/libs/stats.min.js"></script>
+	<script src="../js/util.js"></script>
 
 	<!-- CDN -->
 	<script src="http://codeorigin.jquery.com/jquery-2.0.3.js"></script>
@@ -10,6 +11,7 @@
 
 <body>
 <script>
+$(function(){
 	if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
 	var container, stats;
@@ -37,11 +39,25 @@
 	init();
 	animate();
 
+	function getAxis(){
+		var parent = new THREE.Object3D();
+		var orig = new THREE.Vector3(0, 0, 0);
+		var lineLength = 500;
+		var lineX = getLine(orig, new THREE.Vector3(lineLength, 0, 0), 0xff0000);
+		var lineY = getLine(orig, new THREE.Vector3(0, lineLength, 0), 0x00ff00);
+		var lineZ = getLine(orig, new THREE.Vector3(0, 0, lineLength), 0x0000ff);
+		parent.add(lineX);
+		parent.add(lineY);
+		parent.add(lineZ);
+		return parent;
+	}
+
 	function init() {
 
 		//ルート
-		container = document.createElement('div');
-		document.body.appendChild( container );
+		// container = document.createElement('div');
+		container = document.getElementById('container');
+		//document.body.appendChild( container );
 		//gray background
 		$(container).css("background", "#DDDDDD");
 		$(container).css("width", "100px");
@@ -53,6 +69,8 @@
 
 		//シーン
 		scene = new THREE.Scene();
+
+		scene.add(getAxis());
 
 		//?
 		// roll-over helpers
@@ -100,9 +118,11 @@
 
 		//レンダラー
 		renderer = new THREE.WebGLRenderer( { antialias: true, preserveDrawingBuffer: true } );
+		//描画サイズ
 		//ちょっと小さくすることで画面内におさめる
+		// renderer.setSize(window.innerWidth-10, window.innerHeight-10);
 		renderer.setSize(window.innerWidth-10, window.innerHeight-10);
-		container.appendChild( renderer.domElement );
+		container.appendChild( renderer.domElement ); //canvas
 
 		stats = new Stats();
 		stats.domElement.style.position = 'absolute';
@@ -210,7 +230,7 @@
 	function onDocumentKeyUp( event ) {
 	switch ( event.keyCode ) {
 			case 16: isShiftDown = false; break;
-			case 17: isCtrlDown = false; break;
+			case 17: isCtrlDown = false; p('ctrl up'); break;
 
 			//アローキー
 			case KEY_LEFT:
@@ -248,7 +268,6 @@
 		//アローキーの回転
 		if(pressedArrowKey){
 			//シーン回転
-			p(pressedArrowKey);
 			var rotateSpeed = 2;
 			switch(pressedArrowKey){
 				case KEY_LEFT:
@@ -258,15 +277,18 @@
 					theta -= rotateSpeed;
 					break;
 			}
-
 		}
 
 		//ステージではなくカメラを回転させる
-		camera.position.x = 1400 * Math.sin( THREE.Math.degToRad( theta ) );
-		camera.position.z = 1400 * Math.cos( THREE.Math.degToRad( theta ) );
+		var cameraR = 1500;
+		camera.position.x = cameraR * Math.sin( THREE.Math.degToRad( theta ) );
+		camera.position.z = cameraR * Math.cos( THREE.Math.degToRad( theta ) );
 		camera.lookAt( scene.position );
 
 		renderer.render( scene, camera );
 	}
+});
 </script>
+
+<div id="container"></div>
 </body>
