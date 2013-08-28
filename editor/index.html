@@ -2,6 +2,10 @@
 	<script src="../three.js"></script>
 	<script src="../js/Detector.js"></script>
 	<script src="../js/libs/stats.min.js"></script>
+
+	<!-- CDN -->
+	<script src="http://codeorigin.jquery.com/jquery-2.0.3.js"></script>
+
 </head>
 
 <body>
@@ -12,7 +16,11 @@
 	var camera, scene, renderer;
 	var projector, plane, cube;
 	var mouse2D, mouse3D, raycaster,
+
+	//キー
 	rollOveredFace, isShiftDown = false,
+	pressedArrowKey = false;
+
 	theta = 45 * 0.5, isCtrlDown = false;
 
 	var rollOverMesh, rollOverMaterial;
@@ -20,14 +28,24 @@
 	var cubeGeo, cubeMaterial;
 	var i, intersector;
 
+	//アローキー
+	var KEY_LEFT = 37;
+	var KEY_UP = 38;
+	var KEY_RIGHT = 39;
+	var KEY_DOWN = 40;
+
 	init();
 	animate();
 
 	function init() {
 
 		//ルート
-		container = document.createElement( 'div' );
+		container = document.createElement('div');
 		document.body.appendChild( container );
+		//gray background
+		$(container).css("background", "#DDDDDD");
+		$(container).css("width", "100px");
+		$(container).css("height", "100px");
 
 		//カメラ
 		camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
@@ -82,7 +100,8 @@
 
 		//レンダラー
 		renderer = new THREE.WebGLRenderer( { antialias: true, preserveDrawingBuffer: true } );
-		renderer.setSize( window.innerWidth, window.innerHeight );
+		//ちょっと小さくすることで画面内におさめる
+		renderer.setSize(window.innerWidth-10, window.innerHeight-10);
 		container.appendChild( renderer.domElement );
 
 		stats = new Stats();
@@ -116,14 +135,16 @@
 
 	//ボクセル位置
 	function setVoxelPosition( intersector ) {
-		normalMatrix.getNormalMatrix( intersector.object.matrixWorld );
-		tmpVec.copy( intersector.face.normal );
-		tmpVec.applyMatrix3( normalMatrix ).normalize();
-		voxelPosition.addVectors( intersector.point, tmpVec );
+		if(intersector.face!=null){
+			normalMatrix.getNormalMatrix( intersector.object.matrixWorld );
+			tmpVec.copy( intersector.face.normal );
+			tmpVec.applyMatrix3( normalMatrix ).normalize();
+			voxelPosition.addVectors( intersector.point, tmpVec );
 
-		voxelPosition.x = Math.floor( voxelPosition.x / 50 ) * 50 + 25;
-		voxelPosition.y = Math.floor( voxelPosition.y / 50 ) * 50 + 25;
-		voxelPosition.z = Math.floor( voxelPosition.z / 50 ) * 50 + 25;
+			voxelPosition.x = Math.floor( voxelPosition.x / 50 ) * 50 + 25;
+			voxelPosition.y = Math.floor( voxelPosition.y / 50 ) * 50 + 25;
+			voxelPosition.z = Math.floor( voxelPosition.z / 50 ) * 50 + 25;
+		}
 	}
 
 	//マウス移動時
@@ -137,6 +158,9 @@
 	//ヘルパー
 	function p(v){
 		console.log(v);
+	}
+	function isset( data ){
+	    return ( typeof( data ) != 'undefined' );
 	}
 
 	//マウス押下時
@@ -171,14 +195,30 @@
 		switch( event.keyCode ) {
 			case 16: isShiftDown = true; break;
 			case 17: isCtrlDown = true; break;
+
+			//アローキー
+			case KEY_LEFT:
+			case KEY_RIGHT:
+			case KEY_UP:
+			case KEY_DOWN:
+				pressedArrowKey = event.keyCode;
+				break;
 		}
 	}
 
-	//?
+	//キーUP時
 	function onDocumentKeyUp( event ) {
 	switch ( event.keyCode ) {
 			case 16: isShiftDown = false; break;
 			case 17: isCtrlDown = false; break;
+
+			//アローキー
+			case KEY_LEFT:
+			case KEY_RIGHT:
+			case KEY_UP:
+			case KEY_DOWN:
+				pressedArrowKey = false;
+				break;
 		}
 	}
 
@@ -205,7 +245,23 @@
 			}
 		}
 
-		//1400?
+		//アローキーの回転
+		if(pressedArrowKey){
+			//シーン回転
+			p(pressedArrowKey);
+			var rotateSpeed = 2;
+			switch(pressedArrowKey){
+				case KEY_LEFT:
+					theta += rotateSpeed;
+					break;
+				case KEY_RIGHT:
+					theta -= rotateSpeed;
+					break;
+			}
+
+		}
+
+		//ステージではなくカメラを回転させる
 		camera.position.x = 1400 * Math.sin( THREE.Math.degToRad( theta ) );
 		camera.position.z = 1400 * Math.cos( THREE.Math.degToRad( theta ) );
 		camera.lookAt( scene.position );
