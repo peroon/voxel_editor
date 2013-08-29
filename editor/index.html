@@ -36,6 +36,10 @@ $(function(){
 	var KEY_RIGHT = 39;
 	var KEY_DOWN = 40;
 
+	//デバッグ表示
+	var debugHash = new Array();
+	var debugInfo;
+
 	init();
 	animate();
 
@@ -52,6 +56,22 @@ $(function(){
 		return parent;
 	}
 
+	//デバッグ情報更新
+	function updateDebugInfo(){
+		var innerHTML = hash2html(debugHash);
+		debugInfo.innerHTML = innerHTML;
+	}
+
+	function hash2html(hash){
+	//function hash2html(){
+		var html = '<br><br><br>';
+		for(var key in hash){
+			var addHTML = key + ' : ' + hash[key] + '<br>';
+			html += addHTML;
+		}
+		return html;
+	}
+
 	function init() {
 
 		//ルート
@@ -60,8 +80,14 @@ $(function(){
 		//document.body.appendChild( container );
 		//gray background
 		$(container).css("background", "#DDDDDD");
-		$(container).css("width", "100px");
-		$(container).css("height", "100px");
+		$(container).css("width", "240px");
+		$(container).css("height", "1000px");
+
+		//デバッグ表示
+		debugInfo = document.createElement('div');
+		debugInfo.innerHTML = 'init html';
+		debugInfo.style.position = 'absolute';
+		container.appendChild(debugInfo);
 
 		//カメラ
 		camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
@@ -278,6 +304,10 @@ $(function(){
 					break;
 			}
 		}
+		//デバッグ情報
+		debugHash['theta'] = theta;
+		updateDebugInfo();
+
 
 		//ステージではなくカメラを回転させる
 		var cameraR = 1500;
