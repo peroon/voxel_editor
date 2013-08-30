@@ -41,7 +41,7 @@ $.fn.simpleColorPicker = function(options) {
 
         var box = $('<div id="' + prefix + 'color-picker" class="color-picker" style="position: absolute; left: 0px; top: 0px;"><ul>' + colorsMarkup + '</ul><div style="clear: both;"></div></div>');
         $('body').append(box);
-        box.hide();
+        //box.hide();
 
         box.find('li.color-box').click(function() {
             if (txt.is('input')) {
@@ -55,7 +55,7 @@ $.fn.simpleColorPicker = function(options) {
         });
 
         $('body').bind('click', function() {
-            hideBox(box);
+            //hideBox(box);
         });
 
         box.click(function(event) {
