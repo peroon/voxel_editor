@@ -24,6 +24,9 @@ $(function(){
 	var debugHash = new Array();
 	var debugInfo;
 
+	//UI
+	var UI;
+
 	init();
 	animate();
 
@@ -72,6 +75,15 @@ $(function(){
 		debugInfo.innerHTML = 'init html';
 		debugInfo.style.position = 'absolute';
 		container.appendChild(debugInfo);
+
+		//UI
+		UI = document.createElement('div');
+		UI.innerHTML = 'UI parent';
+		UI.style.position = 'absolute';
+		UI.style.right= '0px';
+		UI.style.width = '300px';	
+		container.appendChild(UI);
+		$(UI).css("background", "#EEDDDD");
 
 		//カメラ
 		camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
