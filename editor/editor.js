@@ -11,7 +11,7 @@ $(function(){
 	pressedArrowKey = false;
 
 	//カメラ角度
-	phi = 45 * 0.5;
+	phi = 75;
 	theta = 60;
 	isCtrlDown = false;
 
@@ -23,9 +23,6 @@ $(function(){
 	//デバッグ表示
 	var debugHash = new Array();
 	var debugInfo;
-
-	//UI
-	var UI;
 
 	init();
 	animate();
@@ -64,13 +61,7 @@ $(function(){
 		container.appendChild(debugInfo);
 
 		//UI
-		UI = document.createElement('div');
-		UI.innerHTML = 'UI parent';
-		UI.style.position = 'absolute';
-		UI.style.right= '0px';
-		UI.style.width = '300px';	
-		container.appendChild(UI);
-		$(UI).css("background", "#EEDDDD");
+		container.appendChild(getUI());
 
 		//カメラ
 		g_camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
