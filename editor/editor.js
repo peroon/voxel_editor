@@ -2,9 +2,9 @@ $(function(){
 	if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
 	var container, stats;
-	var scene, renderer;
+	var scene, g_renderer;
 	var projector, plane, cube;
-	var mouse2D, mouse3D, raycaster,
+	var mouse3D, raycaster,
 
 	//キー
 	rollOveredFace, isShiftDown = false,
@@ -116,7 +116,7 @@ $(function(){
 		plane.visible = false;
 		scene.add( plane );
 
-		mouse2D = new THREE.Vector3( 0, 10000, 0.5 );
+		g_mouse2d = new THREE.Vector3( 0, 10000, 0.5 );
 
 		//ライト
 		var ambientLight = new THREE.AmbientLight( 0x606060 );
@@ -126,13 +126,13 @@ $(function(){
 		scene.add( directionalLight );
 
 		//レンダラー
-		renderer = new THREE.WebGLRenderer( { antialias: true, preserveDrawingBuffer: true } );
+		g_renderer = new THREE.WebGLRenderer( { antialias: true, preserveDrawingBuffer: true } );
 		//描画サイズ
 		//ちょっと小さくすることで画面内におさめる
-		// renderer.setSize(window.innerWidth-10, window.innerHeight-10);
+		// g_renderer.setSize(window.innerWidth-10, window.innerHeight-10);
 		var paddingWidth = 10;
-		renderer.setSize(window.innerWidth-paddingWidth, window.innerHeight-paddingWidth);
-		container.appendChild( renderer.domElement ); //canvas
+		g_renderer.setSize(window.innerWidth-paddingWidth, window.innerHeight-paddingWidth);
+		container.appendChild( g_renderer.domElement ); //canvas
 
 		stats = new Stats();
 		stats.domElement.style.position = 'absolute';
@@ -145,13 +145,6 @@ $(function(){
 		document.addEventListener( 'keyup', onDocumentKeyUp, false );
 		window.addEventListener( 'resize', onWindowResize, false );
 	}//init
-
-	//ウィンドウリサイズ時
-	function onWindowResize() {
-		g_camera.aspect = window.innerWidth / window.innerHeight;
-		g_camera.updateProjectionMatrix();
-		renderer.setSize( window.innerWidth, window.innerHeight );
-	}
 
 	//リアル？
 	function getRealIntersector( intersects ) {
@@ -177,14 +170,6 @@ $(function(){
 			voxelPosition.y = Math.floor( voxelPosition.y / w ) * w + w/2;
 			voxelPosition.z = Math.floor( voxelPosition.z / w ) * w + w/2;
 		}
-	}
-
-	//マウス移動時
-	//X, Y = -1~1
-	function onDocumentMouseMove( event ) {
-		event.preventDefault();
-		mouse2D.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-		mouse2D.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 	}
 
 	//マウス押下時
@@ -254,34 +239,12 @@ $(function(){
 		stats.update();
 	}
 
-	//角度を範囲内に
-	function degreeInRange(degree){
-		if(degree < 0){
-			degree += 360;
-		}
-		else if(degree > 360){
-			degree -= 360;
-		}
-		return degree;
-	}
-
-	//thetaを1-179 degreeに
-	function thetaInRange(theta){
-		if(theta < 1){
-			theta = 1;
-		}
-		else if(theta > 179){
-			theta = 179;
-		}
-		return theta;
-	}
-
 	//描画
 	function render() {
 		if ( isShiftDown ) {
-			theta += mouse2D.x * 1.5;
+			theta += g_mouse2d.x * 1.5;
 		}
-		raycaster = projector.pickingRay( mouse2D.clone(), g_camera );
+		raycaster = projector.pickingRay( g_mouse2d.clone(), g_camera );
 		var intersects = raycaster.intersectObjects( scene.children );
 
 		if ( intersects.length > 0 ) {
@@ -336,6 +299,6 @@ $(function(){
 
 		g_camera.lookAt( scene.position );
 
-		renderer.render( scene, g_camera );
+		g_renderer.render( scene, g_camera );
 	}
 });
