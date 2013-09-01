@@ -2,7 +2,7 @@ $(function(){
 	if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
 	var container, stats;
-	var camera, scene, renderer;
+	var scene, renderer;
 	var projector, plane, cube;
 	var mouse2D, mouse3D, raycaster,
 
@@ -73,8 +73,8 @@ $(function(){
 		$(UI).css("background", "#EEDDDD");
 
 		//カメラ
-		camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
-		camera.position.y = 800;
+		g_camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
+		g_camera.position.y = 800;
 
 		//シーン
 		scene = new THREE.Scene();
@@ -148,8 +148,8 @@ $(function(){
 
 	//ウィンドウリサイズ時
 	function onWindowResize() {
-		camera.aspect = window.innerWidth / window.innerHeight;
-		camera.updateProjectionMatrix();
+		g_camera.aspect = window.innerWidth / window.innerHeight;
+		g_camera.updateProjectionMatrix();
 		renderer.setSize( window.innerWidth, window.innerHeight );
 	}
 
@@ -281,7 +281,7 @@ $(function(){
 		if ( isShiftDown ) {
 			theta += mouse2D.x * 1.5;
 		}
-		raycaster = projector.pickingRay( mouse2D.clone(), camera );
+		raycaster = projector.pickingRay( mouse2D.clone(), g_camera );
 		var intersects = raycaster.intersectObjects( scene.children );
 
 		if ( intersects.length > 0 ) {
@@ -330,12 +330,12 @@ $(function(){
 		var cos_theta = Math.cos(THREE.Math.degToRad(theta));
 		var sin_phi   = Math.sin(THREE.Math.degToRad(phi));
 		var cos_phi   = Math.cos(THREE.Math.degToRad(phi));
-		camera.position.x = cameraR * sin_theta * cos_phi;
-		camera.position.z = cameraR * sin_theta * sin_phi;
-		camera.position.y = cameraR * cos_theta;
+		g_camera.position.x = cameraR * sin_theta * cos_phi;
+		g_camera.position.z = cameraR * sin_theta * sin_phi;
+		g_camera.position.y = cameraR * cos_theta;
 
-		camera.lookAt( scene.position );
+		g_camera.lookAt( scene.position );
 
-		renderer.render( scene, camera );
+		renderer.render( scene, g_camera );
 	}
 });
