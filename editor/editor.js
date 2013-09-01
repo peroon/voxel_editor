@@ -9,9 +9,6 @@ $(function(){
 	//キー
 	rollOveredFace = false;
 
-	//カメラ角度
-	phi = 75;
-	theta = 60;
 
 	var rollOverMesh, rollOverMaterial;
 	var voxelPosition = new THREE.Vector3(), tmpVec = new THREE.Vector3(), normalMatrix = new THREE.Matrix3();
@@ -200,7 +197,9 @@ $(function(){
 			}
 		}
 		else if(event.which==MOUSE_RIGHT){
-			p('mouse right clicked');
+			//マウス位置保存
+			g_oldPageX = event.pageX;
+			g_oldPageY = event.pageY;
 		}
 		else{
 			p('mouse center clicked');
@@ -217,7 +216,7 @@ $(function(){
 	//描画
 	function render() {
 		if ( g_isShiftDown ) {
-			theta += g_mouse2d.x * 1.5;
+			g_theta += g_mouse2d.x * 1.5;
 		}
 		raycaster = projector.pickingRay( g_mouse2d.clone(), g_camera );
 		var intersects = raycaster.intersectObjects( scene.children );
@@ -236,41 +235,41 @@ $(function(){
 			var rotateSpeed = 2;
 			switch(g_pressedArrowKey){
 				case KEY_LEFT:
-					phi += rotateSpeed;
+					g_phi += rotateSpeed;
 					break;
 				case KEY_RIGHT:
-					phi -= rotateSpeed;
+					g_phi -= rotateSpeed;
 					break;
 				case KEY_UP:
-					theta += rotateSpeed;
+					g_theta += rotateSpeed;
 					break;
 				case KEY_DOWN:
-					theta -= rotateSpeed;
+					g_theta -= rotateSpeed;
 					break;
 			}
-			theta = thetaInRange(theta);
-			theta = degreeInRange(theta);
-			phi = degreeInRange(phi);
+			g_theta = thetaInRange(g_theta);
+			g_theta = degreeInRange(g_theta);
+			g_phi = degreeInRange(g_phi);
 		}
 		//デバッグ情報
-		debugHash['theta'] = theta;
-		debugHash['phi'] = phi;
+		debugHash['g_theta'] = g_theta;
+		debugHash['g_phi'] = g_phi;
 		updateDebugInfo();
 
 
 		//ステージではなくカメラを回転させる
 		var cameraR = 1500;
-		//camera.position.x = cameraR * Math.sin( THREE.Math.degToRad( theta ) );
-		//camera.position.z = cameraR * Math.cos( THREE.Math.degToRad( theta ) );
+		//camera.position.x = cameraR * Math.sin( THREE.Math.degToRad( g_theta ) );
+		//camera.position.z = cameraR * Math.cos( THREE.Math.degToRad( g_theta ) );
 
 		//球座標
-		var sin_theta = Math.sin(THREE.Math.degToRad(theta));
-		var cos_theta = Math.cos(THREE.Math.degToRad(theta));
-		var sin_phi   = Math.sin(THREE.Math.degToRad(phi));
-		var cos_phi   = Math.cos(THREE.Math.degToRad(phi));
-		g_camera.position.x = cameraR * sin_theta * cos_phi;
-		g_camera.position.z = cameraR * sin_theta * sin_phi;
-		g_camera.position.y = cameraR * cos_theta;
+		var sin_g_theta = Math.sin(THREE.Math.degToRad(g_theta));
+		var cos_g_theta = Math.cos(THREE.Math.degToRad(g_theta));
+		var sin_g_phi   = Math.sin(THREE.Math.degToRad(g_phi));
+		var cos_g_phi   = Math.cos(THREE.Math.degToRad(g_phi));
+		g_camera.position.x = cameraR * sin_g_theta * cos_g_phi;
+		g_camera.position.z = cameraR * sin_g_theta * sin_g_phi;
+		g_camera.position.y = cameraR * cos_g_theta;
 
 		g_camera.lookAt( scene.position );
 

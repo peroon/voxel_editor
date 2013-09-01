@@ -13,7 +13,16 @@ function onDocumentMouseMove( event ) {
 	g_mouse2d.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 
 	if(g_isMouseRightPressed){
-		p("A");
+		//右クリックドラッグでカメラ回転
+		var diffX = event.pageX - g_oldPageX;
+		var diffY = event.pageY - g_oldPageY;
+
+		g_phi += (diffX/5);
+		g_theta -= (diffY/5);
+
+		//保存
+		g_oldPageX = event.pageX;
+		g_oldPageY = event.pageY;
 	}
 }
 
