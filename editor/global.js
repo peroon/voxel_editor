@@ -7,5 +7,10 @@ var g_isMouseLeftPressed;
 var g_isMouseCenterPressed;
 var g_isMouseRightPressed;
 
+//キー
+var g_isShiftDown = false;
+var g_isCtrlDown = false;
+
+var g_pressedArrowKey;
 
 

@@ -7,13 +7,11 @@ $(function(){
 	var mouse3D, raycaster,
 
 	//キー
-	rollOveredFace, isShiftDown = false,
-	pressedArrowKey = false;
+	rollOveredFace = false;
 
 	//カメラ角度
 	phi = 75;
 	theta = 60;
-	isCtrlDown = false;
 
 	var rollOverMesh, rollOverMaterial;
 	var voxelPosition = new THREE.Vector3(), tmpVec = new THREE.Vector3(), normalMatrix = new THREE.Matrix3();
@@ -164,19 +162,6 @@ $(function(){
 		}
 	}
 
-	//マウスボタンを離したとき
-	function onDocumentMouseUp( event ) {
-		p('mouse up');
-		switch(event.which){
-			case MOUSE_LEFT:
-				g_isMouseLeftPressed = false; break;
-			case MOUSE_CENTER:
-				g_isMouseCenterPressed = false; break;
-			case MOUSE_RIGHT:
-				g_isMouseRightPressed = false; break;
-		}
-	}
-
 	//マウス押下時
 	function onDocumentMouseDown( event ) {
 		event.preventDefault();
@@ -196,7 +181,7 @@ $(function(){
 				intersector = getRealIntersector( intersects );
 
 				//削除
-				if ( isCtrlDown ) {
+				if ( g_isCtrlDown ) {
 					if ( intersector.object != plane ) {
 						scene.remove( intersector.object );
 					}
@@ -222,38 +207,6 @@ $(function(){
 		}
 	}
 
-	//?
-	function onDocumentKeyDown( event ) {
-		switch( event.keyCode ) {
-			case 16: isShiftDown = true; break;
-			case 17: isCtrlDown = true; break;
-
-			//アローキー
-			case KEY_LEFT:
-			case KEY_RIGHT:
-			case KEY_UP:
-			case KEY_DOWN:
-				pressedArrowKey = event.keyCode;
-				break;
-		}
-	}
-
-	//キーUP時
-	function onDocumentKeyUp( event ) {
-	switch ( event.keyCode ) {
-			case 16: isShiftDown = false; break;
-			case 17: isCtrlDown = false; p('ctrl up'); break;
-
-			//アローキー
-			case KEY_LEFT:
-			case KEY_RIGHT:
-			case KEY_UP:
-			case KEY_DOWN:
-				pressedArrowKey = false;
-				break;
-		}
-	}
-
 	//Update
 	function animate() {
 		requestAnimationFrame( animate );
@@ -263,7 +216,7 @@ $(function(){
 
 	//描画
 	function render() {
-		if ( isShiftDown ) {
+		if ( g_isShiftDown ) {
 			theta += g_mouse2d.x * 1.5;
 		}
 		raycaster = projector.pickingRay( g_mouse2d.clone(), g_camera );
@@ -278,10 +231,10 @@ $(function(){
 		}
 
 		//アローキーの回転
-		if(pressedArrowKey){
+		if(g_pressedArrowKey){
 			//シーン回転
 			var rotateSpeed = 2;
-			switch(pressedArrowKey){
+			switch(g_pressedArrowKey){
 				case KEY_LEFT:
 					phi += rotateSpeed;
 					break;
