@@ -11,4 +11,8 @@ function onDocumentMouseMove( event ) {
 	event.preventDefault();
 	g_mouse2d.x = ( event.clientX / window.innerWidth ) * 2 - 1;
 	g_mouse2d.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+
+	if(g_isMouseRightPressed){
+		p("A");
+	}
 }

@@ -6,3 +6,8 @@ var KEY_DOWN  = 40;
 
 //キューブサイズ
 var CUBE_WIDTH = 50;
+
+//マウスボタン
+var MOUSE_LEFT = 1;
+var MOUSE_CENTER = 2;
+var MOUSE_RIGHT = 3;

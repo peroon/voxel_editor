@@ -141,6 +141,7 @@ $(function(){
 
 		document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 		document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+		document.addEventListener( 'mouseup', onDocumentMouseUp, false );
 		document.addEventListener( 'keydown', onDocumentKeyDown, false );
 		document.addEventListener( 'keyup', onDocumentKeyUp, false );
 		window.addEventListener( 'resize', onWindowResize, false );
@@ -172,31 +173,61 @@ $(function(){
 		}
 	}
 
+	//マウスボタンを離したとき
+	function onDocumentMouseUp( event ) {
+		p('mouse up');
+		switch(event.which){
+			case MOUSE_LEFT:
+				g_isMouseLeftPressed = false; break;
+			case MOUSE_CENTER:
+				g_isMouseCenterPressed = false; break;
+			case MOUSE_RIGHT:
+				g_isMouseRightPressed = false; break;
+		}
+	}
+
 	//マウス押下時
 	function onDocumentMouseDown( event ) {
-		p("mouse down");
 		event.preventDefault();
-		var intersects = raycaster.intersectObjects( scene.children );
-		if ( intersects.length > 0 ) {
-			intersector = getRealIntersector( intersects );
 
-			//削除
-			if ( isCtrlDown ) {
-				if ( intersector.object != plane ) {
-					scene.remove( intersector.object );
-				}
+		switch(event.which){
+			case MOUSE_LEFT:
+				g_isMouseLeftPressed = true; break;
+			case MOUSE_CENTER:
+				g_isMouseCenterPressed = true; break;
+			case MOUSE_RIGHT:
+				g_isMouseRightPressed = true; break;
+		}
 
-			//作成
-			} else {
+		if(event.which==MOUSE_LEFT){
+			var intersects = raycaster.intersectObjects( scene.children );
+			if ( intersects.length > 0 ) {
 				intersector = getRealIntersector( intersects );
-				setVoxelPosition( intersector );
 
-				var voxel = new THREE.Mesh( cubeGeo, cubeMaterial );
-				voxel.position.copy( voxelPosition );
-				voxel.matrixAutoUpdate = false;
-				voxel.updateMatrix();
-				scene.add( voxel );
+				//削除
+				if ( isCtrlDown ) {
+					if ( intersector.object != plane ) {
+						scene.remove( intersector.object );
+					}
+
+				//作成
+				} else {
+					intersector = getRealIntersector( intersects );
+					setVoxelPosition( intersector );
+
+					var voxel = new THREE.Mesh( cubeGeo, cubeMaterial );
+					voxel.position.copy( voxelPosition );
+					voxel.matrixAutoUpdate = false;
+					voxel.updateMatrix();
+					scene.add( voxel );
+				}
 			}
+		}
+		else if(event.which==MOUSE_RIGHT){
+			p('mouse right clicked');
+		}
+		else{
+			p('mouse center clicked');
 		}
 	}
 
