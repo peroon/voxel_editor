@@ -25,6 +25,13 @@ $(function(){
 	p("init color picker");
 	$('input#color').simpleColorPicker();
 });
+
+//disable context menu
+$(document).ready(function(){
+  $(document).bind("contextmenu",function(e){
+    return false;
+  });
+});
 </script>
 
 <body>
