@@ -55,9 +55,6 @@ $(function(){
 		debugInfo.style.position = 'absolute';
 		container.appendChild(debugInfo);
 
-		//UI
-		//container.appendChild(getUI());
-
 		//カメラ
 		g_camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
 		g_camera.position.y = 800;
