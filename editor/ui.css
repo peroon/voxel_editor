@@ -1,0 +1,12 @@
+div#ui_base{
+	position:absolute;
+	right:0px;
+	width:200px;
+	background-color:#EEDDDD;
+
+/*	UI.style.right= '0px';
+	UI.style.width = '300px';	
+	$(UI).css("background", "#EEDDDD");	
+
+*/
+}

@@ -5,7 +5,6 @@ function getUI(){
 	UI.style.position = 'absolute';
 	UI.style.right= '0px';
 	UI.style.width = '300px';	
-	container.appendChild(UI);
 	$(UI).css("background", "#EEDDDD");	
 	return UI;
 }

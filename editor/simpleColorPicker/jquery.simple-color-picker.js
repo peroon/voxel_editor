@@ -1,4 +1,3 @@
-
 $.fn.simpleColorPicker = function(options) {
     var defaults = {
         colorsPerLine: 8,
@@ -36,11 +35,21 @@ $.fn.simpleColorPicker = function(options) {
                 colorsMarkup += '<li style="float: none; clear: both; overflow: hidden; background-color: #fff; display: block; height: 1px; line-height: 1px; font-size: 1px; margin-bottom: -2px;"></li>';
             }
 
-            colorsMarkup += '<li id="' + prefix + 'color-' + i + '" class="color-box" style="' + breakLine + 'background-color: ' + item + '" title="' + item + '"></li>';
+            colorsMarkup += '<li id="' + prefix + 'color-' + i + '" class="color-box" style="' + 
+            breakLine + 'background-color: ' + item + '" title="' + item + '"></li>';
         }
 
-        var box = $('<div id="' + prefix + 'color-picker" class="color-picker" style="position: absolute; left: 0px; top: 0px;"><ul>' + colorsMarkup + '</ul><div style="clear: both;"></div></div>');
-        $('body').append(box);
+        //ベース
+        var box = $('<div id="' + prefix + 
+            //'color-picker" class="color-picker" style="position: absolute; left: 0px; top: 0px;"><ul>' + 
+            'color-picker" class="color-picker"><ul>' + 
+            colorsMarkup + '</ul><div style="clear: both;"></div></div>');
+
+        //親
+        //$('body').append(box);
+        $('#ui_base').append(box);
+
+        //最初に表示するかどうか
         //box.hide();
 
         box.find('li.color-box').click(function() {
@@ -62,6 +71,7 @@ $.fn.simpleColorPicker = function(options) {
             event.stopPropagation();
         });
 
+        //位置を決めて表示
         var positionAndShowBox = function(box) {
           var pos = txt.offset();
           var left = pos.left + txt.outerWidth() - box.outerWidth();
@@ -70,6 +80,7 @@ $.fn.simpleColorPicker = function(options) {
           showBox(box);
         }
 
+        //inputクリック時
         txt.click(function(event) {
           event.stopPropagation();
           if (!txt.is('input')) {
@@ -82,13 +93,14 @@ $.fn.simpleColorPicker = function(options) {
           positionAndShowBox(box);
         });
 
+        //非表示
         function hideBox(box) {
-            if (opts.hideEffect == 'fade')
-                box.fadeOut();
-            else if (opts.hideEffect == 'slide')
-                box.slideUp();
-            else
-                box.hide();
+            // if (opts.hideEffect == 'fade')
+            //     box.fadeOut();
+            // else if (opts.hideEffect == 'slide')
+            //     box.slideUp();
+            // else
+            //     box.hide();
         }
 
         function showBox(box) {

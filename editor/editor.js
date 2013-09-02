@@ -56,7 +56,7 @@ $(function(){
 		container.appendChild(debugInfo);
 
 		//UI
-		container.appendChild(getUI());
+		//container.appendChild(getUI());
 
 		//カメラ
 		g_camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );

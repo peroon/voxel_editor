@@ -14,6 +14,10 @@
 	<link type="text/css" href="./simpleColorPicker/jquery.simple-color-picker.css" rel="stylesheet" />
 	<script type="text/javascript" src="./simpleColorPicker/jquery.simple-color-picker.js"></script>
 
+	<!-- CSS -->
+	<link rel="stylesheet" type="text/css" href="./ui.css">
+
+	<!-- JS -->
 	<script src="./util_draw.js"></script>
 	<script src="./util_math.js"></script>
 	<script src="./global.js"></script>
@@ -32,7 +36,7 @@ $(function(){
 	$('input#color').simpleColorPicker();
 });
 
-//disable context menu
+//右クリックでコンテキストメニュー出さない
 $(document).ready(function(){
   $(document).bind("contextmenu",function(e){
     return false;
@@ -41,6 +45,14 @@ $(document).ready(function(){
 </script>
 
 <body>
-	<div id="container"></div>
-	<input type="text" id="color" name="color" />
+	<div id="container">
+
+		<!-- UI -->
+		<div id="ui_base">ui_base
+			<!-- color picker -->
+			<input type="text" id="color" name="color" />
+		</div>
+
+	</div>
+
 </body>
