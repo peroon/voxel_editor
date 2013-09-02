@@ -52,15 +52,21 @@ $.fn.simpleColorPicker = function(options) {
         //最初に表示するかどうか
         //box.hide();
 
+        //パレットクリック時
         box.find('li.color-box').click(function() {
+            //選ばれた色
+            var selected_color = opts.colors[this.id.substr(this.id.indexOf('-') + 1)];
             if (txt.is('input')) {
-              txt.val(opts.colors[this.id.substr(this.id.indexOf('-') + 1)]);
+              txt.val(selected_color);
               txt.blur();
             }
             if ($.isFunction(defaults.onChangeColor)) {
-              defaults.onChangeColor.call(txt, opts.colors[this.id.substr(this.id.indexOf('-') + 1)]);
+              defaults.onChangeColor.call(txt, selected_color);
             }
-            hideBox(box);
+            //hideBox(box);
+
+            //マウスキューブの色変更
+            changeColorOfCube(selected_color);
         });
 
         $('body').bind('click', function() {
@@ -92,6 +98,12 @@ $.fn.simpleColorPicker = function(options) {
         txt.focus(function() {
           positionAndShowBox(box);
         });
+
+        //キューブの色変更
+        function changeColorOfCube(color){
+            var color0x = color.replace("#", "0x") - 0; //int
+            g_rollOverMesh.material = new THREE.MeshBasicMaterial( { color: color0x, opacity: 0.5, transparent: true } );
+        }
 
         //非表示
         function hideBox(box) {

@@ -20,3 +20,6 @@ var g_pressedArrowKey;
 //カメラ角度
 var g_phi = 75;
 var g_theta = 60;
+
+//マウスキューブ
+var g_rollOverMesh;

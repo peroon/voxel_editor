@@ -9,10 +9,16 @@ $(function(){
 	//キー
 	rollOveredFace = false;
 
+	var rollOverMaterial;
 
-	var rollOverMesh, rollOverMaterial;
-	var voxelPosition = new THREE.Vector3(), tmpVec = new THREE.Vector3(), normalMatrix = new THREE.Matrix3();
-	var cubeGeo, cubeMaterial;
+	var voxelPosition = new THREE.Vector3();
+	var tmpVec = new THREE.Vector3();
+	var normalMatrix = new THREE.Matrix3();
+
+	//生成されるキューブ
+	var cubeGeo;
+	var cubeMaterial;
+
 	var i, intersector;
 
 	//デバッグ表示
@@ -64,16 +70,20 @@ $(function(){
 
 		scene.add(getAxis());
 
-		//?
+		//マウスに付いてくるキューブ
 		// roll-over helpers
 		rollOverGeo = new THREE.CubeGeometry(CUBE_WIDTH, CUBE_WIDTH, CUBE_WIDTH);
 		rollOverMaterial = new THREE.MeshBasicMaterial( { color: 0xff0000, opacity: 0.5, transparent: true } );
-		rollOverMesh = new THREE.Mesh( rollOverGeo, rollOverMaterial );
-		scene.add( rollOverMesh );
+		g_rollOverMesh = new THREE.Mesh( rollOverGeo, rollOverMaterial );
+		scene.add( g_rollOverMesh );
+
+		//メッシュの色を変えるテスト
+		g_rollOverMesh.material = new THREE.MeshBasicMaterial( { color: 0x00ff00, opacity: 0.5, transparent: true } );
 
 		// cubes
 		cubeGeo = new THREE.CubeGeometry(CUBE_WIDTH, CUBE_WIDTH, CUBE_WIDTH);
-		cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xfeb74c, ambient: 0x00ff80, shading: THREE.FlatShading, map: THREE.ImageUtils.loadTexture( "square-outline-textured.png" ) } );
+		cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xfeb74c, ambient: 0x00ff80, 
+			shading: THREE.FlatShading, map: THREE.ImageUtils.loadTexture( "square-outline-textured.png" ) } );
 		cubeMaterial.ambient = cubeMaterial.color;
 
 		//レイ
@@ -134,7 +144,7 @@ $(function(){
 	function getRealIntersector( intersects ) {
 		for( i = 0; i < intersects.length; i++ ) {
 			intersector = intersects[ i ];
-			if ( intersector.object != rollOverMesh ) {
+			if ( intersector.object != g_rollOverMesh ) {
 				return intersector;
 			}
 		}
@@ -185,6 +195,7 @@ $(function(){
 					intersector = getRealIntersector( intersects );
 					setVoxelPosition( intersector );
 
+					//ボクセル実体化
 					var voxel = new THREE.Mesh( cubeGeo, cubeMaterial );
 					voxel.position.copy( voxelPosition );
 					voxel.matrixAutoUpdate = false;
@@ -222,7 +233,7 @@ $(function(){
 			intersector = getRealIntersector( intersects );
 			if ( intersector ) {
 				setVoxelPosition( intersector );
-				rollOverMesh.position = voxelPosition;
+				g_rollOverMesh.position = voxelPosition;
 			}
 		}
 

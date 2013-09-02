@@ -17,6 +17,7 @@ function onDocumentMouseMove( event ) {
 		var diffX = event.pageX - g_oldPageX;
 		var diffY = event.pageY - g_oldPageY;
 
+		//カメラ角度
 		g_phi += (diffX/5);
 		g_theta -= (diffY/5);
 
@@ -28,7 +29,6 @@ function onDocumentMouseMove( event ) {
 
 //マウスボタンを離したとき
 function onDocumentMouseUp( event ) {
-	p('mouse up');
 	switch(event.which){
 		case MOUSE_LEFT:
 			g_isMouseLeftPressed = false; break;
