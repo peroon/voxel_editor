@@ -66,7 +66,7 @@ $.fn.simpleColorPicker = function(options) {
             //hideBox(box);
 
             //マウスキューブの色変更
-            changeColorOfCube(selected_color);
+            changeColorOfCube(sharpTo0x(selected_color));
             //色保存
             g_selectedColor = sharpTo0x(selected_color);
             //マテリアル保存
@@ -102,12 +102,6 @@ $.fn.simpleColorPicker = function(options) {
         txt.focus(function() {
           positionAndShowBox(box);
         });
-
-        //キューブの色変更
-        function changeColorOfCube(color){
-            var color0x = sharpTo0x(color);
-            g_rollOverMesh.material = new THREE.MeshBasicMaterial( { color: color0x, opacity: 0.5, transparent: true } );
-        }
 
         //非表示
         function hideBox(box) {

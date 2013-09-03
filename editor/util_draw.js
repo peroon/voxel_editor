@@ -33,3 +33,8 @@ function getCubeMaterial(color){
 function sharpTo0x(sharp_color){
 	return sharp_color.replace("#", "0x") - 0;
 }
+
+//マウスキューブの色変更
+function changeColorOfCube(color_0x){
+    g_rollOverMesh.material = new THREE.MeshBasicMaterial( { color: color_0x, opacity: 0.5, transparent: true } );
+}

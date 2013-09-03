@@ -214,6 +214,14 @@ $(function(){
 			if(intersects.length>0){
 				intersector = getRealIntersector(intersects);
 				g_selectedMaterial = intersector.object.material;
+
+				var color_threejs = g_selectedMaterial.color;
+				var r255 = color_threejs.r * 255;
+				var g255 = color_threejs.g * 255;
+				var b255 = color_threejs.b * 255;
+				var color_sharp = '#' + zero2(r255.toString(16)) + zero2(g255.toString(16)) + zero2(b255.toString(16));
+				p(color_sharp);
+				changeColorOfCube(sharpTo0x(color_sharp));
 			}
 		}
 		else{
