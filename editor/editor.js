@@ -1,5 +1,5 @@
 $(function(){
-	if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+	if(!Detector.webgl) Detector.addGetWebGLMessage();
 
 	var container, stats;
 	var scene, g_renderer;
@@ -36,7 +36,7 @@ $(function(){
 	function hash2html(hash){
 	//function hash2html(){
 		var html = '<br><br><br>';
-		for(var key in hash){
+		for( var key in hash ){
 			var addHTML = key + ' : ' + hash[key] + '<br>';
 			html += addHTML;
 		}
@@ -44,7 +44,6 @@ $(function(){
 	}
 
 	function init() {
-		p("init");
 		//ルート
 		// container = document.createElement('div');
 		container = document.getElementById('container');
@@ -61,7 +60,7 @@ $(function(){
 		container.appendChild(debugInfo);
 
 		//カメラ
-		g_camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
+		g_camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
 		g_camera.position.y = 800;
 
 		//シーン
@@ -72,12 +71,12 @@ $(function(){
 		//マウスに付いてくるキューブ
 		// roll-over helpers
 		rollOverGeo = new THREE.CubeGeometry(CUBE_WIDTH, CUBE_WIDTH, CUBE_WIDTH);
-		rollOverMaterial = new THREE.MeshBasicMaterial( { color: 0xff0000, opacity: 0.5, transparent: true } );
-		g_rollOverMesh = new THREE.Mesh( rollOverGeo, rollOverMaterial );
-		scene.add( g_rollOverMesh );
+		rollOverMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000, opacity: 0.5, transparent: true });
+		g_rollOverMesh = new THREE.Mesh(rollOverGeo, rollOverMaterial);
+		scene.add(g_rollOverMesh);
 
 		//メッシュの色を変えるテスト
-		g_rollOverMesh.material = new THREE.MeshBasicMaterial( { color: 0x00ff00, opacity: 0.5, transparent: true } );
+		g_rollOverMesh.material = new THREE.MeshBasicMaterial({color: 0x00ff00, opacity: 0.5, transparent: true});
 
 		// cubes
 		cubeGeo = new THREE.CubeGeometry(CUBE_WIDTH, CUBE_WIDTH, CUBE_WIDTH);
@@ -89,59 +88,59 @@ $(function(){
 		//グリッド（もっと簡潔に書ける）
 		var size = 500, step = 50;
 		var geometry = new THREE.Geometry();
-		for ( var i = - size; i <= size; i += step ) {
-			geometry.vertices.push( new THREE.Vector3( - size, 0, i ) );
-			geometry.vertices.push( new THREE.Vector3(   size, 0, i ) );
-			geometry.vertices.push( new THREE.Vector3( i, 0, - size ) );
-			geometry.vertices.push( new THREE.Vector3( i, 0,   size ) );
+		for (var i=-size; i<=size; i+=step){
+			geometry.vertices.push( new THREE.Vector3(-size, 0, i));
+			geometry.vertices.push( new THREE.Vector3( size, 0, i));
+			geometry.vertices.push( new THREE.Vector3(i, 0, -size));
+			geometry.vertices.push( new THREE.Vector3(i, 0,  size));
 		}
-		var material = new THREE.LineBasicMaterial( { color: 0x000000, opacity: 0.2 } );
-		var line = new THREE.Line( geometry, material );
+		var material = new THREE.LineBasicMaterial({color: 0x000000, opacity: 0.2});
+		var line = new THREE.Line(geometry, material);
 		line.type = THREE.LinePieces;
-		scene.add( line );
+		scene.add(line);
 
 		//?
-		plane = new THREE.Mesh( new THREE.PlaneGeometry( 1000, 1000 ), new THREE.MeshBasicMaterial() );
-		plane.rotation.x = - Math.PI / 2;
+		plane = new THREE.Mesh(new THREE.PlaneGeometry(1000, 1000), new THREE.MeshBasicMaterial());
+		plane.rotation.x = -Math.PI/2;
 		plane.visible = false;
-		scene.add( plane );
+		scene.add(plane);
 
-		g_mouse2d = new THREE.Vector3( 0, 10000, 0.5 );
+		g_mouse2d = new THREE.Vector3(0, 10000, 0.5);
 
 		//ライト
-		var ambientLight = new THREE.AmbientLight( 0x606060 );
-		scene.add( ambientLight );
-		var directionalLight = new THREE.DirectionalLight( 0xffffff );
-		directionalLight.position.set( 1, 0.75, 0.5 ).normalize();
-		scene.add( directionalLight );
+		var ambientLight = new THREE.AmbientLight(0x606060);
+		scene.add(ambientLight);
+		var directionalLight = new THREE.DirectionalLight(0xffffff);
+		directionalLight.position.set(1, 0.75, 0.5).normalize();
+		scene.add(directionalLight);
 
 		//レンダラー
-		g_renderer = new THREE.WebGLRenderer( { antialias: true, preserveDrawingBuffer: true } );
+		g_renderer = new THREE.WebGLRenderer({antialias: true, preserveDrawingBuffer: true});
 		//描画サイズ
 		//ちょっと小さくすることで画面内におさめる
 		// g_renderer.setSize(window.innerWidth-10, window.innerHeight-10);
 		var paddingWidth = 10;
 		g_renderer.setSize(window.innerWidth-paddingWidth, window.innerHeight-paddingWidth);
-		container.appendChild( g_renderer.domElement ); //canvas
+		container.appendChild(g_renderer.domElement); //canvas
 
 		stats = new Stats();
 		stats.domElement.style.position = 'absolute';
 		stats.domElement.style.top = '0px';
-		container.appendChild( stats.domElement );
+		container.appendChild(stats.domElement);
 
-		document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-		document.addEventListener( 'mousedown', onDocumentMouseDown, false );
-		document.addEventListener( 'mouseup', onDocumentMouseUp, false );
-		document.addEventListener( 'keydown', onDocumentKeyDown, false );
-		document.addEventListener( 'keyup', onDocumentKeyUp, false );
-		window.addEventListener( 'resize', onWindowResize, false );
+		document.addEventListener('mousemove', onDocumentMouseMove, false);
+		document.addEventListener('mousedown', onDocumentMouseDown, false);
+		document.addEventListener('mouseup'  , onDocumentMouseUp,   false);
+		document.addEventListener('keydown'  , onDocumentKeyDown,   false);
+		document.addEventListener('keyup'    , onDocumentKeyUp,     false);
+		window.addEventListener('resize'     , onWindowResize,      false);
 	}//init
 
 	//リアル？
-	function getRealIntersector( intersects ) {
-		for( i = 0; i < intersects.length; i++ ) {
-			intersector = intersects[ i ];
-			if ( intersector.object != g_rollOverMesh ) {
+	function getRealIntersector(intersects){
+		for(i=0; i<intersects.length; i++){
+			intersector = intersects[i];
+			if(intersector.object!=g_rollOverMesh){
 				return intersector;
 			}
 		}
@@ -149,23 +148,23 @@ $(function(){
 	}
 
 	//ボクセル位置
-	function setVoxelPosition( intersector ) {
+	function setVoxelPosition(intersector){
 		if(intersector.face!=null){
-			normalMatrix.getNormalMatrix( intersector.object.matrixWorld );
-			tmpVec.copy( intersector.face.normal );
-			tmpVec.applyMatrix3( normalMatrix ).normalize();
-			voxelPosition.addVectors( intersector.point, tmpVec );
+			normalMatrix.getNormalMatrix(intersector.object.matrixWorld);
+			tmpVec.copy(intersector.face.normal);
+			tmpVec.applyMatrix3(normalMatrix).normalize();
+			voxelPosition.addVectors(intersector.point, tmpVec);
 
 			var w = CUBE_WIDTH;
-			voxelPosition.x = Math.floor( voxelPosition.x / w ) * w + w/2;
-			voxelPosition.y = Math.floor( voxelPosition.y / w ) * w + w/2;
-			voxelPosition.z = Math.floor( voxelPosition.z / w ) * w + w/2;
+			voxelPosition.x = Math.floor(voxelPosition.x / w) * w + w/2;
+			voxelPosition.y = Math.floor(voxelPosition.y / w) * w + w/2;
+			voxelPosition.z = Math.floor(voxelPosition.z / w) * w + w/2;
 		}
 	}
 
 	//マウス押下時
 	//キューブ生成
-	function onDocumentMouseDown( event ) {
+	function onDocumentMouseDown(event){
 		event.preventDefault();
 
 		switch(event.which){
@@ -177,33 +176,32 @@ $(function(){
 				g_isMouseRightPressed = true; break;
 		}
 
-		var intersects = raycaster.intersectObjects( scene.children );
+		var intersects = raycaster.intersectObjects(scene.children);
 		if(event.which==MOUSE_LEFT){
-			if ( intersects.length > 0 ) {
-				intersector = getRealIntersector( intersects );
+			if(intersects.length>0){
+				intersector = getRealIntersector(intersects);
 
 				//削除
-				if ( g_isCtrlDown ) {
-					if ( intersector.object != plane ) {
+				if(g_isCtrlDown){
+					if(intersector.object!=plane){
 						scene.remove( intersector.object );
 					}
 
 				//作成
 				} else {
-					intersector = getRealIntersector( intersects );
-					setVoxelPosition( intersector );
+					intersector = getRealIntersector(intersects);
+					setVoxelPosition(intersector);
 
 					//キューブ色更新
 					// g_cubeMaterial = getCubeMaterial(g_selectedColor);
 					g_cubeMaterial = g_selectedMaterial;
-					p(g_selectedMaterial);
 
 					//ボクセル実体化
-					var voxel = new THREE.Mesh( cubeGeo, g_cubeMaterial );
-					voxel.position.copy( voxelPosition );
+					var voxel = new THREE.Mesh(cubeGeo, g_cubeMaterial);
+					voxel.position.copy(voxelPosition);
 					voxel.matrixAutoUpdate = false;
 					voxel.updateMatrix();
-					scene.add( voxel );
+					scene.add(voxel);
 				}
 			}
 		}
@@ -213,8 +211,8 @@ $(function(){
 			g_oldPageY = event.pageY;
 
 			//スポイト
-			if ( intersects.length > 0 ) {
-				intersector = getRealIntersector( intersects );
+			if(intersects.length>0){
+				intersector = getRealIntersector(intersects);
 				g_selectedMaterial = intersector.object.material;
 			}
 		}
@@ -225,23 +223,23 @@ $(function(){
 
 	//Update
 	function animate() {
-		requestAnimationFrame( animate );
+		requestAnimationFrame(animate);
 		render();
 		stats.update();
 	}
 
 	//描画
 	function render() {
-		if ( g_isShiftDown ) {
+		if(g_isShiftDown){
 			g_theta += g_mouse2d.x * 1.5;
 		}
-		raycaster = projector.pickingRay( g_mouse2d.clone(), g_camera );
-		var intersects = raycaster.intersectObjects( scene.children );
+		raycaster = projector.pickingRay(g_mouse2d.clone(), g_camera);
+		var intersects = raycaster.intersectObjects(scene.children);
 
-		if ( intersects.length > 0 ) {
-			intersector = getRealIntersector( intersects );
-			if ( intersector ) {
-				setVoxelPosition( intersector );
+		if(intersects.length>0){
+			intersector = getRealIntersector(intersects);
+			if(intersector){
+				setVoxelPosition(intersector);
 				g_rollOverMesh.position = voxelPosition;
 			}
 		}
@@ -288,8 +286,8 @@ $(function(){
 		g_camera.position.z = cameraR * sin_g_theta * sin_g_phi;
 		g_camera.position.y = cameraR * cos_g_theta;
 
-		g_camera.lookAt( scene.position );
+		g_camera.lookAt(scene.position);
 
-		g_renderer.render( scene, g_camera );
+		g_renderer.render(scene, g_camera);
 	}
 });
