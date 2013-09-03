@@ -177,8 +177,8 @@ $(function(){
 				g_isMouseRightPressed = true; break;
 		}
 
+		var intersects = raycaster.intersectObjects( scene.children );
 		if(event.which==MOUSE_LEFT){
-			var intersects = raycaster.intersectObjects( scene.children );
 			if ( intersects.length > 0 ) {
 				intersector = getRealIntersector( intersects );
 
@@ -194,7 +194,9 @@ $(function(){
 					setVoxelPosition( intersector );
 
 					//キューブ色更新
-					g_cubeMaterial = getCubeMaterial(g_selectedColor);
+					// g_cubeMaterial = getCubeMaterial(g_selectedColor);
+					g_cubeMaterial = g_selectedMaterial;
+					p(g_selectedMaterial);
 
 					//ボクセル実体化
 					var voxel = new THREE.Mesh( cubeGeo, g_cubeMaterial );
@@ -209,6 +211,12 @@ $(function(){
 			//マウス位置保存
 			g_oldPageX = event.pageX;
 			g_oldPageY = event.pageY;
+
+			//スポイト
+			if ( intersects.length > 0 ) {
+				intersector = getRealIntersector( intersects );
+				g_selectedMaterial = intersector.object.material;
+			}
 		}
 		else{
 			p('mouse center clicked');

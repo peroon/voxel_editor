@@ -69,6 +69,8 @@ $.fn.simpleColorPicker = function(options) {
             changeColorOfCube(selected_color);
             //色保存
             g_selectedColor = sharpTo0x(selected_color);
+            //マテリアル保存
+            g_selectedMaterial = getCubeMaterial(g_selectedColor);
         });
 
         $('body').bind('click', function() {

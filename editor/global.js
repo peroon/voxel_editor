@@ -27,3 +27,4 @@ var g_cubeMaterial;
 
 //カラーピッカー
 var g_selectedColor = 0xff0000;
+var g_selectedMaterial = getCubeMaterial(g_selectedColor);
