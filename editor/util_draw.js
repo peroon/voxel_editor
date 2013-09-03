@@ -21,3 +21,15 @@ function getAxis(){
 
 	return parent;
 }
+
+function getCubeMaterial(color){
+	var mat = new THREE.MeshLambertMaterial( { color: color, ambient: 0x00ff80, 
+			shading: THREE.FlatShading, map: THREE.ImageUtils.loadTexture( "square-outline-textured.png" ) } );
+	mat.ambient = mat.color;
+	return mat;
+}
+
+//シャープ記法の色を数値に変換
+function sharpTo0x(color){
+	return color.replace("#", "0x") - 0;
+}

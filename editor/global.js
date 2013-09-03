@@ -23,3 +23,7 @@ var g_theta = 60;
 
 //マウスキューブ
 var g_rollOverMesh;
+var g_cubeMaterial;
+
+//カラーピッカー
+var g_selectedColor = 0xff0000;

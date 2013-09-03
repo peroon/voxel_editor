@@ -17,7 +17,6 @@ $(function(){
 
 	//生成されるキューブ
 	var cubeGeo;
-	var cubeMaterial;
 
 	var i, intersector;
 
@@ -82,9 +81,7 @@ $(function(){
 
 		// cubes
 		cubeGeo = new THREE.CubeGeometry(CUBE_WIDTH, CUBE_WIDTH, CUBE_WIDTH);
-		cubeMaterial = new THREE.MeshLambertMaterial( { color: 0xfeb74c, ambient: 0x00ff80, 
-			shading: THREE.FlatShading, map: THREE.ImageUtils.loadTexture( "square-outline-textured.png" ) } );
-		cubeMaterial.ambient = cubeMaterial.color;
+		g_cubeMaterial = getCubeMaterial(0xfeb74c);
 
 		//レイ
 		projector = new THREE.Projector();
@@ -167,6 +164,7 @@ $(function(){
 	}
 
 	//マウス押下時
+	//キューブ生成
 	function onDocumentMouseDown( event ) {
 		event.preventDefault();
 
@@ -195,8 +193,11 @@ $(function(){
 					intersector = getRealIntersector( intersects );
 					setVoxelPosition( intersector );
 
+					//キューブ色更新
+					g_cubeMaterial = getCubeMaterial(g_selectedColor);
+
 					//ボクセル実体化
-					var voxel = new THREE.Mesh( cubeGeo, cubeMaterial );
+					var voxel = new THREE.Mesh( cubeGeo, g_cubeMaterial );
 					voxel.position.copy( voxelPosition );
 					voxel.matrixAutoUpdate = false;
 					voxel.updateMatrix();
