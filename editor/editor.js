@@ -49,12 +49,13 @@ $(function(){
 		container = document.getElementById('container');
 		//document.body.appendChild( container );
 		//gray background
-		$(container).css("background", "#DDDDDD");
+		//$(container).css("background", "#DDDDDD");
 		$(container).css("width", "240px");
 		$(container).css("height", "1000px");
 
 		//デバッグ表示
 		debugInfo = document.createElement('div');
+		debugInfo.setAttribute("id", "ui_debug");
 		debugInfo.innerHTML = 'init html';
 		debugInfo.style.position = 'absolute';
 		container.appendChild(debugInfo);

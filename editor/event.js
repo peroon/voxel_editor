@@ -57,7 +57,8 @@ function onDocumentKeyDown( event ) {
 
 //キーUP時
 function onDocumentKeyUp( event ) {
-switch ( event.keyCode ) {
+	p('KEY ' + event.keyCode);
+	switch ( event.keyCode ) {
 		case 16: g_isShiftDown = false; break;
 		case 17: g_isCtrlDown = false; p('ctrl up'); break;
 
@@ -68,5 +69,18 @@ switch ( event.keyCode ) {
 		case KEY_DOWN:
 			g_pressedArrowKey = false;
 			break;
+
+		//文字キー
+		case KEY_T:
+			toggleToolVisible();
+			break;
 	}
+}
+
+function toggleToolVisible(){
+	//ツール
+	$("div#ui_base").toggle();
+	//デバッグ表示
+	$("div#ui_debug").toggle();
+	$("div#stats").toggle();
 }

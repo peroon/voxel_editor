@@ -11,3 +11,6 @@ var CUBE_WIDTH = 50;
 var MOUSE_LEFT = 1;
 var MOUSE_CENTER = 2;
 var MOUSE_RIGHT = 3;
+
+//キューブサイズ
+var KEY_T = 84;
