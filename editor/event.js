@@ -57,7 +57,7 @@ function onDocumentKeyDown( event ) {
 
 //キーUP時
 function onDocumentKeyUp( event ) {
-	p('KEY ' + event.keyCode);
+	//p('KEY ' + event.keyCode);
 	switch ( event.keyCode ) {
 		case 16: g_isShiftDown = false; break;
 		case 17: g_isCtrlDown = false; p('ctrl up'); break;
