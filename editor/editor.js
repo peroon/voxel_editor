@@ -163,6 +163,15 @@ $(function(){
 		}
 	}
 
+	//キューブ数
+	function incrementCubeNum(increment_value){
+		var cubeNumObject = $("#cube_num");
+		var cubeNum = cubeNumObject.children("span").html() / 1;
+
+		//increment
+		cubeNumObject.children("span").html(cubeNum+1);
+	}
+
 	//マウス押下時
 	//キューブ生成
 	function onDocumentMouseDown(event){
@@ -203,6 +212,8 @@ $(function(){
 					voxel.matrixAutoUpdate = false;
 					voxel.updateMatrix();
 					scene.add(voxel);
+
+					incrementCubeNum(1);
 				}
 			}
 		}
