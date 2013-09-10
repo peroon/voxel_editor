@@ -44,6 +44,16 @@ $(document).ready(function(){
     return false;
   });
 });
+
+//デモON/OFF
+function toggleDemo(){
+	g_isDemo = !g_isDemo;
+	if(g_isDemo){
+		$("#demo_button").text('Stop Demo');
+	}else{
+		$("#demo_button").text('Start Demo');
+	}
+}
 </script>
 
 <body>
@@ -65,7 +75,7 @@ $(document).ready(function(){
 			</div>
 
 			<a class="btn btn-danger">Clear all cube</a><br>
-			<a class="btn btn-primary">Start Demo</a><br>
+			<a id="demo_button" onClick="toggleDemo()" class="btn btn-primary">Start Demo</a><br>
 			<a class="btn btn-warning">TODO</a><br>
 
 			<!-- キューブ数 -->

@@ -257,8 +257,19 @@ $(function(){
 		stats.update();
 	}
 
+	//デモ時の更新
+	function updateOnDemo(){
+		g_phi += 0.5;
+	}
+
 	//描画
 	function render() {
+
+		//デモONのとき
+		if(g_isDemo){
+			updateOnDemo();
+		}
+
 		if(g_isShiftDown){
 			g_theta += g_mouse2d.x * 1.5;
 		}
