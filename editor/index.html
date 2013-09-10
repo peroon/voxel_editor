@@ -33,7 +33,9 @@
 
 <script>
 $(function(){
+	//カラーピッカー
 	$('input#color').simpleColorPicker();
+	$('input#color').val(num0x_to_sharp_string(g_selectedColor));
 });
 
 //右クリックでコンテキストメニュー出さない
@@ -48,9 +50,12 @@ $(document).ready(function(){
 	<div id="container">
 
 		<!-- UI -->
-		<div id="ui_base">ui_base
+		<div id="ui_base">
+
 			<!-- color picker -->
-			<input type="text" id="color" name="color" />
+			<div id="color_picker_ui">
+				<input type="text" id="color" name="color" />
+			</div>
 
 			<!-- ボクセル位置データ配列 -->
 			<div id="voxel_posision_array">
@@ -58,15 +63,16 @@ $(document).ready(function(){
 				voxel 1: xxx<br>
 				voxel 2: xxx<br>
 			</div>
-			<a href="" class="btn btn-danger">Clear all cube</a><br>
-			<a href="" class="btn btn-primary">TODO</a><br>
-			<a href="" class="btn btn-warning">TODO</a><br>
+
+			<a class="btn btn-danger">Clear all cube</a><br>
+			<a class="btn btn-primary">Start Demo</a><br>
+			<a class="btn btn-warning">TODO</a><br>
 
 			<!-- キューブ数 -->
 			<div id="cube_num">
 				cube num : <span class="badge badge-success">0</span>
 			</div>
-			
+
 		</div>
 
 	</div>

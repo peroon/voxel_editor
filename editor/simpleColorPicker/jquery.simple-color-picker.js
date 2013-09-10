@@ -47,7 +47,8 @@ $.fn.simpleColorPicker = function(options) {
 
         //親
         //$('body').append(box);
-        $('#ui_base').append(box);
+        //$('#ui_base').append(box);
+        $('#color_picker_ui').append(box);
 
         //最初に表示するかどうか
         //box.hide();

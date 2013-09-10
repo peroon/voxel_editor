@@ -34,6 +34,16 @@ function sharpTo0x(sharp_color){
 	return sharp_color.replace("#", "0x") - 0;
 }
 
+//
+//input: 0x00ff00
+//output: "#00ff00"
+function num0x_to_sharp_string(val){
+	var str = val.toString(16);
+	str = '000000' + str;
+	str = str.substr(-6);
+	return '#' + str;
+}
+
 //マウスキューブの色変更
 function changeColorOfCube(color_0x){
     g_rollOverMesh.material = new THREE.MeshBasicMaterial( { color: color_0x, opacity: 0.5, transparent: true } );

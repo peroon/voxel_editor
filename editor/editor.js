@@ -72,7 +72,7 @@ $(function(){
 		//マウスに付いてくるキューブ
 		// roll-over helpers
 		rollOverGeo = new THREE.CubeGeometry(CUBE_WIDTH, CUBE_WIDTH, CUBE_WIDTH);
-		rollOverMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000, opacity: 0.5, transparent: true });
+		rollOverMaterial = new THREE.MeshBasicMaterial({ color: g_selectedColor, opacity: 0.5, transparent: true });
 		g_rollOverMesh = new THREE.Mesh(rollOverGeo, rollOverMaterial);
 		scene.add(g_rollOverMesh);
 

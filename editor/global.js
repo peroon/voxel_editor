@@ -26,5 +26,5 @@ var g_rollOverMesh;
 var g_cubeMaterial;
 
 //カラーピッカー
-var g_selectedColor = 0xff0000;
+var g_selectedColor = 0x00ff00;
 var g_selectedMaterial = getCubeMaterial(g_selectedColor);
