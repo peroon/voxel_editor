@@ -19,6 +19,7 @@
 	<link rel="stylesheet" type="text/css" href="./ui.css">
 
 	<!-- JS -->
+	<script src="./mouse_wheel.js"></script>
 	<script src="./util_draw.js"></script>
 	<script src="./util_math.js"></script>
 	<script src="./util_string.js"></script>
@@ -36,7 +37,12 @@ $(function(){
 	//カラーピッカー
 	$('input#color').simpleColorPicker();
 	$('input#color').val(num0x_to_sharp_string(g_selectedColor));
-});
+
+	//マウスホイール
+	if (window.addEventListener)
+	        window.addEventListener('DOMMouseScroll', onMouseWheel, false);//Mozilla
+			window.onmousewheel = document.onmousewheel = onMouseWheel;//IE,Opera,Chrome
+	});
 
 //右クリックでコンテキストメニュー出さない
 $(document).ready(function(){

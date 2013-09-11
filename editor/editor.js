@@ -313,7 +313,6 @@ $(function(){
 
 
 		//ステージではなくカメラを回転させる
-		var cameraR = 1500;
 		//camera.position.x = cameraR * Math.sin( THREE.Math.degToRad( g_theta ) );
 		//camera.position.z = cameraR * Math.cos( THREE.Math.degToRad( g_theta ) );
 
@@ -322,9 +321,9 @@ $(function(){
 		var cos_g_theta = Math.cos(THREE.Math.degToRad(g_theta));
 		var sin_g_phi   = Math.sin(THREE.Math.degToRad(g_phi));
 		var cos_g_phi   = Math.cos(THREE.Math.degToRad(g_phi));
-		g_camera.position.x = cameraR * sin_g_theta * cos_g_phi;
-		g_camera.position.z = cameraR * sin_g_theta * sin_g_phi;
-		g_camera.position.y = cameraR * cos_g_theta;
+		g_camera.position.x = g_cameraR * sin_g_theta * cos_g_phi;
+		g_camera.position.z = g_cameraR * sin_g_theta * sin_g_phi;
+		g_camera.position.y = g_cameraR * cos_g_theta;
 
 		g_camera.lookAt(scene.position);
 
