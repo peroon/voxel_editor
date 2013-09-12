@@ -33,3 +33,6 @@ var g_selectedMaterial = getCubeMaterial(g_selectedColor);
 
 //デモ
 var g_isDemo = false;
+
+//ミラー
+var g_isMirror = false;

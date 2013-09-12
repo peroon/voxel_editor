@@ -212,8 +212,26 @@ $(function(){
 					voxel.matrixAutoUpdate = false;
 					voxel.updateMatrix();
 					scene.add(voxel);
-
+					//キューブ数
 					incrementCubeNum(1);
+
+					//ミラー
+					if(g_isMirror){
+						var mirrorPosition = voxelPosition.clone();
+						mirrorPosition.x *= -1;
+						p(mirrorPosition);
+
+						//TODO 関数化
+						//ボクセル実体化
+						var voxel = new THREE.Mesh(cubeGeo, g_cubeMaterial);
+						voxel.position.copy(mirrorPosition);
+						voxel.matrixAutoUpdate = false;
+						voxel.updateMatrix();
+						scene.add(voxel);
+						//キューブ数
+						incrementCubeNum(1);
+
+					}
 				}
 			}
 		}

@@ -60,6 +60,16 @@ function toggleDemo(){
 		$("#demo_button").text('Start Demo');
 	}
 }
+
+//ミラーON/OFF
+function toggleMirror(){
+	g_isMirror = !g_isMirror;
+	if(g_isMirror){
+		$("#mirror_button").text('Stop Mirror');
+	}else{
+		$("#mirror_button").text('Start Mirror');
+	}
+}
 </script>
 
 <body>
@@ -81,8 +91,8 @@ function toggleDemo(){
 			</div>
 
 			<a class="btn btn-danger">Clear all cube</a><br>
-			<a id="demo_button" onClick="toggleDemo()" class="btn btn-primary">Start Demo</a><br>
-			<a class="btn btn-warning">TODO</a><br>
+			<a id="demo_button"   onClick="toggleDemo()"   class="btn btn-primary">Start Demo</a><br>
+			<a id="mirror_button" onClick="toggleMirror()" class="btn btn-warning">Start Mirror</a><br>
 
 			<!-- キューブ数 -->
 			<div id="cube_num">
