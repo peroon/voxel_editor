@@ -46,5 +46,7 @@ function num0x_to_sharp_string(val){
 
 //マウスキューブの色変更
 function changeColorOfCube(color_0x){
-    g_rollOverMesh.material = new THREE.MeshBasicMaterial( { color: color_0x, opacity: 0.5, transparent: true } );
+	var material = new THREE.MeshBasicMaterial( { color: color_0x, opacity: 0.5, transparent: true } );
+    g_rollOverMesh.material = material;
+    g_rollOverMeshMirror.material = material;
 }

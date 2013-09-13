@@ -25,6 +25,7 @@ var g_cameraR = 1500;
 
 //マウスキューブ
 var g_rollOverMesh;
+var g_rollOverMeshMirror;
 var g_cubeMaterial;
 
 //カラーピッカー

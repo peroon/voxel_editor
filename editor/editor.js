@@ -75,6 +75,10 @@ $(function(){
 		rollOverMaterial = new THREE.MeshBasicMaterial({ color: g_selectedColor, opacity: 0.5, transparent: true });
 		g_rollOverMesh = new THREE.Mesh(rollOverGeo, rollOverMaterial);
 		scene.add(g_rollOverMesh);
+		//ミラー用
+		g_rollOverMeshMirror = new THREE.Mesh(rollOverGeo, rollOverMaterial);
+		scene.add(g_rollOverMeshMirror);
+		g_rollOverMeshMirror.visible = false;
 
 		//メッシュの色を変えるテスト
 		g_rollOverMesh.material = new THREE.MeshBasicMaterial({color: 0x00ff00, opacity: 0.5, transparent: true});
@@ -219,7 +223,6 @@ $(function(){
 					if(g_isMirror){
 						var mirrorPosition = voxelPosition.clone();
 						mirrorPosition.x *= -1;
-						p(mirrorPosition);
 
 						//TODO 関数化
 						//ボクセル実体化
@@ -299,6 +302,13 @@ $(function(){
 			if(intersector){
 				setVoxelPosition(intersector);
 				g_rollOverMesh.position = voxelPosition;
+
+				if(g_isMirror){
+					var voxelPositionMirror = voxelPosition.clone();
+					voxelPositionMirror.x *= -1;
+					g_rollOverMeshMirror.position = voxelPositionMirror;
+
+				}
 			}
 		}
 

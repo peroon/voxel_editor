@@ -65,8 +65,10 @@ function toggleDemo(){
 function toggleMirror(){
 	g_isMirror = !g_isMirror;
 	if(g_isMirror){
+		g_rollOverMeshMirror.visible = true;
 		$("#mirror_button").text('Stop Mirror');
 	}else{
+		g_rollOverMeshMirror.visible = false;
 		$("#mirror_button").text('Start Mirror');
 	}
 }
