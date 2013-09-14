@@ -22,20 +22,20 @@ $(function(){
 
 	//デバッグ表示
 	var debugHash = new Array();
-	var debugInfo;
+	var ui_debug_variables = $("#ui_debug_variables");
 
 	init();
 	animate();
 
 	//デバッグ情報更新
 	function updateDebugInfo(){
-		var innerHTML = hash2html(debugHash);
-		debugInfo.innerHTML = innerHTML;
+		var html_variables = hash2html(debugHash);
+		ui_debug_variables.html(html_variables);
 	}
 
 	function hash2html(hash){
 	//function hash2html(){
-		var html = '<br><br><br>';
+		var html = '';
 		for( var key in hash ){
 			var addHTML = key + ' : ' + hash[key] + '<br>';
 			html += addHTML;
@@ -45,18 +45,12 @@ $(function(){
 
 	function init() {
 		//ルート
-		// container = document.createElement('div');
 		container = document.getElementById('container');
-		//document.body.appendChild( container );
-		//gray background
-		//$(container).css("background", "#DDDDDD");
 		$(container).css("width", "240px");
 		$(container).css("height", "1000px");
 
 		//デバッグ表示
-		debugInfo = document.createElement('div');
-		debugInfo.setAttribute("id", "ui_debug");
-		debugInfo.innerHTML = 'init html';
+		var debugInfo = document.getElementById('ui_debug');
 		debugInfo.style.position = 'absolute';
 		container.appendChild(debugInfo);
 
@@ -128,10 +122,9 @@ $(function(){
 		g_renderer.setSize(window.innerWidth-paddingWidth, window.innerHeight-paddingWidth);
 		container.appendChild(g_renderer.domElement); //canvas
 
+		//負荷
 		stats = new Stats();
-		stats.domElement.style.position = 'absolute';
-		stats.domElement.style.top = '0px';
-		container.appendChild(stats.domElement);
+		$("#ui_load_viewer").append(stats.domElement);
 
 		document.addEventListener('mousemove', onDocumentMouseMove, false);
 		document.addEventListener('mousedown', onDocumentMouseDown, false);
@@ -236,6 +229,9 @@ $(function(){
 
 					}
 				}
+
+				//JSON表示更新
+				updateJSON();
 			}
 		}
 		else if(event.which==MOUSE_RIGHT){
@@ -283,6 +279,11 @@ $(function(){
 		g_phi += 0.5;
 	}
 
+	function updateJSON(){
+		var html_json = JSON.stringify(g_cubeJSON);
+		$("#ui_json").html(html_json);
+	}
+
 	//描画
 	function render() {
 
@@ -291,9 +292,6 @@ $(function(){
 			updateOnDemo();
 		}
 
-		if(g_isShiftDown){
-			g_theta += g_mouse2d.x * 1.5;
-		}
 		raycaster = projector.pickingRay(g_mouse2d.clone(), g_camera);
 		var intersects = raycaster.intersectObjects(scene.children);
 

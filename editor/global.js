@@ -37,3 +37,14 @@ var g_isDemo = false;
 
 //ミラー
 var g_isMirror = false;
+
+//JSON
+var g_cubeJSON = 
+{
+	"cubes":{
+		"x":10,
+		"y":20,
+		"z":30,
+		"color":"#ff0000",
+	}
+};
