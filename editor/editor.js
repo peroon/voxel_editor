@@ -284,8 +284,9 @@ $(function(){
 		g_phi += 0.5;
 	}
 
+	//デバッグJSON表示
 	function updateJSON(){
-		var html_json = JSON.stringify(g_cubeJSON);
+		var html_json = JSON.stringify(g_cubeJSON, null, "<br>");
 		$("#ui_json").html(html_json);
 	}
 

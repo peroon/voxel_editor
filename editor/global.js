@@ -41,10 +41,9 @@ var g_isMirror = false;
 //JSON
 var g_cubeJSON = 
 {
-	"cubes":{
-		"x":10,
-		"y":20,
-		"z":30,
-		"color":"#ff0000",
-	}
+	// タイトル
+	"title":'title_of_work',
+
+	//位置、色の情報
+	"cubes":{}
 };
