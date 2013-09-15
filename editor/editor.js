@@ -216,6 +216,18 @@ $(function(){
 					scene.add(voxel);
 					//キューブ数
 					incrementCubeNum(1);
+					//JSON
+					var cubePosition = {};
+					//位置
+					cubePosition.x = voxelPosition.x;
+					cubePosition.y = voxelPosition.y;
+					cubePosition.z = voxelPosition.z;
+					//色
+					//#ff0000
+					var color_sharp = threeJsColor_to_sharpColor(g_cubeMaterial.color);
+					//色をインデックスとしてJSONに登録
+					g_cubeJSON.cubes[color_sharp] = cubePosition;
+
 
 					//ミラー
 					if(g_isMirror){
@@ -286,8 +298,11 @@ $(function(){
 
 	//デバッグJSON表示
 	function updateJSON(){
-		var html_json = JSON.stringify(g_cubeJSON, null, "<br>");
-		$("#ui_json").html(html_json);
+		var html_json = JSON.stringify(g_cubeJSON, null, " ");
+		html_json_str = html_json.toString();
+		//HTMLに表示するときに見やすく
+		html_json_str = html_json_str.replaceAll("{", "{<br>")		
+		$("#ui_json").html(html_json_str);
 	}
 
 	//描画

@@ -30,6 +30,8 @@ function getCubeMaterial(color){
 }
 
 //シャープ記法の色を数値に変換
+//#ff0000
+//0xff0000
 function sharpTo0x(sharp_color){
 	return sharp_color.replace("#", "0x") - 0;
 }
