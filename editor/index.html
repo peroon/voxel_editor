@@ -25,6 +25,10 @@
 	<script src="./util_string.js"></script>
 	<script src="./global.js"></script>
 	<script src="./event.js"></script>
+
+	<script src="./save.js"></script>
+	<script src="./submit.js"></script>
+
 	<script src="./editor.js"></script>
 
 	<style>
@@ -112,14 +116,18 @@ function toggleMirror(){
 				voxel 2: xxx<br>
 			</div>
 
-			<a class="btn btn-danger">Clear all cube</a><br>
-			<a id="demo_button"   onClick="toggleDemo()"   class="btn btn-primary">Start Demo</a><br>
-			<a id="mirror_button" onClick="toggleMirror()" class="btn btn-warning">Start Mirror</a><br>
-
 			<!-- キューブ数 -->
 			<div id="cube_num">
 				cube num : <span class="badge badge-success">0</span>
 			</div>
+
+			<a class="btn btn-danger">Clear all cube</a><br>
+			<a id="demo_button"   onClick="toggleDemo()"   class="btn btn-primary">Start Demo</a><br>
+			<a id="mirror_button" onClick="toggleMirror()" class="btn btn-warning">Start Mirror</a><br>
+
+			<!-- 保存と投稿 -->
+			<a id="save_button" onClick="saveJSONLocally()" class="btn btn-success">Save</a><br>
+			<a id="submit_button" onClick="submitJSON()" class="btn btn-primary">Submit</a><br>
 
 		</div>
 
