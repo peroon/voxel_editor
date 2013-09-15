@@ -37,7 +37,12 @@ $(function(){
 	//function hash2html(){
 		var html = '';
 		for( var key in hash ){
-			var addHTML = key + ' : ' + hash[key] + '<br>';
+			var val = hash[key];
+			if($.isNumeric(val)){
+				//数値なら、桁数制限
+				val = val.toFixed(2);
+			}
+			var addHTML = key + ' : ' + val + '<br>';
 			html += addHTML;
 		}
 		return html;
