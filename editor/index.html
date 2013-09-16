@@ -10,6 +10,7 @@
 	<!-- CDN -->
 	<script src="http://codeorigin.jquery.com/jquery-2.0.3.js"></script>
 	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 
 	<!-- color picker -->
 	<link type="text/css" href="./simpleColorPicker/jquery.simple-color-picker.css" rel="stylesheet" />
@@ -127,9 +128,45 @@ function toggleMirror(){
 			<a id="demo_button"   onClick="toggleDemo()"   class="btn btn-primary">Start Demo</a><br>
 			<a id="mirror_button" onClick="toggleMirror()" class="btn btn-warning">Start Mirror</a><br>
 
-			<!-- 保存と投稿 -->
-			<a id="save_button" onClick="saveJSONLocally()" class="btn btn-success">Save</a><br>
-			<a id="submit_button" onClick="submitJSON()" class="btn btn-primary">Submit</a><br>
+			<!-- 保存 -->
+			<a data-toggle="modal" href="#saveModal"
+			   id="save_button" onClick="saveJSONLocally()" class="btn btn-success">Save</a><br>
+		    <div class="modal fade" id="saveModal">
+		        <div class="modal-dialog">
+		        	<div class="modal-content">
+			            <div class="modal-header">
+		            		<button class="close" data-dismiss="modal">&times;</button>
+		              		<h4 class="modal-title">データをローカルに保存しますか？</h4>
+			            </div>
+			            <div class="modal-body">
+			            	データ:xxxxxxxxxxxxxxxxxxxxxxxx
+			            </div>
+			            <div class="modal-footer">
+				            <button class="btn btn-primary">はい</button>
+			            </div>
+		        	</div>
+		        </div>
+		    </div>
+ 
+			<!-- 投稿 -->
+			<a data-toggle="modal" href="#submitModal"
+			   id="submit_button" onClick="submitJSON()" class="btn btn-primary">Submit</a><br>
+		    <div class="modal fade" id="submitModal">
+		        <div class="modal-dialog">
+		        	<div class="modal-content">
+			            <div class="modal-header">
+		            		<button class="close" data-dismiss="modal">&times;</button>
+		              		<h4 class="modal-title">データをサーバにアップロードしますか？</h4>
+			            </div>
+			            <div class="modal-body">
+			            	データ:xxxxxxxxxxxxxxxxxxxxxxxx
+			            </div>
+			            <div class="modal-footer">
+				            <button class="btn btn-primary">はい</button>
+			            </div>
+		        	</div>
+		        </div>
+		    </div>
 
 		</div>
 
