@@ -226,8 +226,13 @@ $(function(){
 					//#ff0000
 					var color_sharp = threeJsColor_to_sharpColor(g_cubeMaterial.color);
 					//色をインデックスとしてJSONに登録
-					g_cubeJSON.cubes[color_sharp] = cubePosition;
-
+					//push
+					var cubePositions = g_cubeJSON.cubes[color_sharp];
+					if(cubePositions==undefined){
+						cubePositions = [];
+					}
+					cubePositions.push(cubePosition);
+					g_cubeJSON.cubes[color_sharp] = cubePositions;
 
 					//ミラー
 					if(g_isMirror){
