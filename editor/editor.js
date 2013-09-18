@@ -303,10 +303,10 @@ $(function(){
 
 	//デバッグJSON表示
 	function updateJSON(){
-		var html_json = JSON.stringify(g_cubeJSON, null, " ");
+		var html_json = JSON.stringify(g_cubeJSON, null, 2);
 		html_json_str = html_json.toString();
 		//HTMLに表示するときに見やすく
-		html_json_str = html_json_str.replaceAll("{", "{<br>")		
+		html_json_str = html_json_str.replaceAll("{", "<br>{")		
 		$("#ui_json").html(html_json_str);
 	}
 
