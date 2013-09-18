@@ -217,22 +217,7 @@ $(function(){
 					//キューブ数
 					incrementCubeNum(1);
 					//JSON
-					var cubePosition = {};
-					//位置
-					cubePosition.x = voxelPosition.x;
-					cubePosition.y = voxelPosition.y;
-					cubePosition.z = voxelPosition.z;
-					//色
-					//#ff0000
-					var color_sharp = threeJsColor_to_sharpColor(g_cubeMaterial.color);
-					//色をインデックスとしてJSONに登録
-					//push
-					var cubePositions = g_cubeJSON.cubes[color_sharp];
-					if(cubePositions==undefined){
-						cubePositions = [];
-					}
-					cubePositions.push(cubePosition);
-					g_cubeJSON.cubes[color_sharp] = cubePositions;
+					addToJSON(voxelPosition);
 
 					//ミラー
 					if(g_isMirror){
@@ -248,7 +233,8 @@ $(function(){
 						scene.add(voxel);
 						//キューブ数
 						incrementCubeNum(1);
-
+						//JSON
+						addToJSON(mirrorPosition);
 					}
 				}
 
@@ -287,6 +273,25 @@ $(function(){
 		else{
 			p('mouse center clicked');
 		}
+	}
+
+	function addToJSON(voxelPosition){
+		var cubePosition = {};
+		//位置
+		cubePosition.x = voxelPosition.x;
+		cubePosition.y = voxelPosition.y;
+		cubePosition.z = voxelPosition.z;
+		//色
+		//#ff0000
+		var color_sharp = threeJsColor_to_sharpColor(g_cubeMaterial.color);
+		//色をインデックスとしてJSONに登録
+		//push
+		var cubePositions = g_cubeJSON.cubes[color_sharp];
+		if(cubePositions==undefined){
+			cubePositions = [];
+		}
+		cubePositions.push(cubePosition);
+		g_cubeJSON.cubes[color_sharp] = cubePositions;
 	}
 
 	//Update
