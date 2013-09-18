@@ -196,6 +196,12 @@ $(function(){
 				//削除
 				if(g_isCtrlDown){
 					if(intersector.object!=plane){
+						//消されるキューブ位置
+						voxelPosition = intersector.object.position;
+						//JSONから削除
+						removeFromJSON(voxelPosition);
+
+						//Sceneから削除
 						scene.remove( intersector.object );
 					}
 
@@ -292,6 +298,35 @@ $(function(){
 		}
 		cubePositions.push(cubePosition);
 		g_cubeJSON.cubes[color_sharp] = cubePositions;
+	}
+	function removeFromJSON(voxelPosition){
+		//色一覧
+		var color_keys = Object.keys(g_cubeJSON.cubes);
+
+		//全探索して同じ位置のデータを削除
+		for(var i=0; i<color_keys.length; i++){
+			var color_key = color_keys[i];
+			var position_array = g_cubeJSON.cubes[color_key];
+
+			for(var j=0; j<position_array.length; j++){
+				var position = position_array[j];
+
+				//同じ位置なら削除
+				if(isSamePosition(position, voxelPosition)){
+					position_array.splice(j,1);
+					g_cubeJSON.cubes[color_key] = position_array;
+					break;
+				}
+			}
+		}
+	}
+
+	function isSamePosition(v0, v1){
+		if(v0.x==v1.x && v0.y==v1.y && v0.z==v1.z){
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 	//Update
