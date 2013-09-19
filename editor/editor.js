@@ -314,7 +314,12 @@ $(function(){
 				//同じ位置なら削除
 				if(isSamePosition(position, voxelPosition)){
 					position_array.splice(j,1);
-					g_cubeJSON.cubes[color_key] = position_array;
+					//長さ0なら色ごと消す
+					if(position_array.length==0){
+						delete g_cubeJSON.cubes[color_key];
+					}else{
+						g_cubeJSON.cubes[color_key] = position_array;
+					}
 					break;
 				}
 			}
