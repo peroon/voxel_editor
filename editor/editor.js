@@ -1,3 +1,24 @@
+//キューブ数
+function incrementCubeNum(increment_value){
+	var cubeNumObject = $("#cube_num");
+	var cubeNum = cubeNumObject.children("span").html() / 1;
+
+	//increment
+	cubeNumObject.children("span").html(cubeNum+1);
+}
+function setCubeNum(increment_value){
+	$("#cube_num").children("span").html(0);
+}
+
+//デバッグJSON表示
+function updateJSON(){
+	var html_json = JSON.stringify(g_cubeJSON, null, 2);
+	html_json_str = html_json.toString();
+	//HTMLに表示するときに見やすく
+	html_json_str = html_json_str.replaceAll("{", "<br>{")		
+	$("#ui_json").html(html_json_str);
+}
+
 $(function(){
 	if(!Detector.webgl) Detector.addGetWebGLMessage();
 
@@ -165,15 +186,6 @@ $(function(){
 		}
 	}
 
-	//キューブ数
-	function incrementCubeNum(increment_value){
-		var cubeNumObject = $("#cube_num");
-		var cubeNum = cubeNumObject.children("span").html() / 1;
-
-		//increment
-		cubeNumObject.children("span").html(cubeNum+1);
-	}
-
 	//マウス押下時
 	//キューブ生成
 	function onDocumentMouseDown(event){
@@ -219,6 +231,7 @@ $(function(){
 					voxel.position.copy(voxelPosition);
 					voxel.matrixAutoUpdate = false;
 					voxel.updateMatrix();
+					voxel.tag = 'cube';
 					scene.add(voxel);
 					//キューブ数
 					incrementCubeNum(1);
@@ -236,6 +249,7 @@ $(function(){
 						voxel.position.copy(mirrorPosition);
 						voxel.matrixAutoUpdate = false;
 						voxel.updateMatrix();
+						voxel.tag = 'cube';
 						scene.add(voxel);
 						//キューブ数
 						incrementCubeNum(1);
@@ -344,15 +358,6 @@ $(function(){
 	//デモ時の更新
 	function updateOnDemo(){
 		g_phi += 0.5;
-	}
-
-	//デバッグJSON表示
-	function updateJSON(){
-		var html_json = JSON.stringify(g_cubeJSON, null, 2);
-		html_json_str = html_json.toString();
-		//HTMLに表示するときに見やすく
-		html_json_str = html_json_str.replaceAll("{", "<br>{")		
-		$("#ui_json").html(html_json_str);
 	}
 
 	//描画

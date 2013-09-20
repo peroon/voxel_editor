@@ -28,6 +28,7 @@
 	<script src="./util_string.js"></script>
 	<script src="./global.js"></script>
 	<script src="./event.js"></script>
+	<script src="./clear.js"></script>
 
 	<script src="./save.js"></script>
 	<script src="./submit.js"></script>
@@ -124,7 +125,9 @@ function toggleMirror(){
 				cube num : <span class="badge badge-success">0</span>
 			</div>
 
-			<a class="btn btn-danger">Clear all cube</a><br>
+			<!-- キューブ全消去	 -->
+			<a class="btn btn-danger" onClick="clearAllCube()">Clear all cube</a><br>
+
 			<a id="demo_button"   onClick="toggleDemo()"   class="btn btn-primary">Start Demo</a><br>
 			<a id="mirror_button" onClick="toggleMirror()" class="btn btn-warning">Start Mirror</a><br>
 
