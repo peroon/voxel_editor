@@ -164,6 +164,57 @@ function toggleMirror(){
 		        </div>
 		    </div>
 
+		    <!-- Webからインポート -->
+		    <a data-toggle="modal" href="#importFromWeb" 
+				class="btn btn-success">Import from Web</a><br>
+		    <div class="modal fade" id="importFromWeb">
+		        <div class="modal-dialog">
+		        	<div class="modal-content">
+			            <div class="modal-header">
+		            		<button class="close" data-dismiss="modal">&times;</button>
+		              		<h4 class="modal-title">Webからインポート</h4>
+			            </div>
+			            <div class="modal-body">
+			            	選択肢<br>
+			            	A<br>
+			            	A<br>
+			            	A<br>
+						</div>
+
+			            <div class="modal-footer">
+				            <button class="btn btn-primary">Import</button>
+			            </div>
+		        	</div>
+		        </div>
+		    </div>
+
+		    <!-- テキストからインポート -->
+		    <a data-toggle="modal" href="#importFromText" 
+		    	class="btn btn-success">Import from Text</a><br>
+		    <div class="modal fade" id="importFromText">
+		        <div class="modal-dialog">
+		        	<div class="modal-content">
+			            <div class="modal-header">
+		            		<button class="close" data-dismiss="modal">&times;</button>
+		              		<h4 class="modal-title">テキストからインポート</h4>
+			            </div>
+			            <div class="modal-body">
+			            	テキスト入力
+			            	<textarea>
+			            		AAA
+			            	</textarea>
+						</div>
+
+			            <div class="modal-footer">
+				            <button class="btn btn-primary">Import</button>
+			            </div>
+		        	</div>
+		        </div>
+		    </div>
+
+		    <!-- エクスポート -->
+		    <a class="btn btn-primary">Export into Text</a><br>
+
 		    <!-- キー説明 -->
 		    <div id="key_explanation" class="alert alert-info">
 		    	左クリック : 作成<br>
