@@ -119,14 +119,14 @@ function toggleMirror(){
 			</div>
 
 			<!-- キューブ全消去	 -->
-			<a class="btn btn-danger" onClick="clearAllCube()">Clear all cube</a><br>
+			<a class="btn btn-danger btn-block" onClick="clearAllCube()">Clear all cube</a>
 
-			<a id="demo_button"   onClick="toggleDemo()"   class="btn btn-primary">Start Demo</a><br>
-			<a id="mirror_button" onClick="toggleMirror()" class="btn btn-warning">Start Mirror</a><br>
+			<a id="demo_button"   onClick="toggleDemo()"   class="btn btn-primary btn-block">Start Demo</a>
+			<a id="mirror_button" onClick="toggleMirror()" class="btn btn-warning btn-block">Start Mirror</a>
 
 			<!-- 保存 -->
 			<a data-toggle="modal" href="#saveModal"
-			   id="save_button" onClick="saveJSONLocally()" class="btn btn-success">Save</a><br>
+			   id="save_button" onClick="saveJSONLocally()" class="btn btn-success btn-block">Save</a>
 		    <div class="modal fade" id="saveModal">
 		        <div class="modal-dialog">
 		        	<div class="modal-content">
@@ -146,7 +146,7 @@ function toggleMirror(){
  
 			<!-- 投稿 -->
 			<a data-toggle="modal" href="#submitModal"
-			   id="submit_button" onClick="submitJSON()" class="btn btn-primary">Submit</a><br>
+			   id="submit_button" onClick="submitJSON()" class="btn btn-primary btn-block">Submit</a>
 		    <div class="modal fade" id="submitModal">
 		        <div class="modal-dialog">
 		        	<div class="modal-content">
@@ -166,7 +166,7 @@ function toggleMirror(){
 
 		    <!-- Webからインポート -->
 		    <a data-toggle="modal" href="#importFromWeb" 
-				class="btn btn-success">Import from Web</a><br>
+				class="btn btn-success btn-block">Import from Web</a>
 		    <div class="modal fade" id="importFromWeb">
 		        <div class="modal-dialog">
 		        	<div class="modal-content">
@@ -190,7 +190,7 @@ function toggleMirror(){
 
 		    <!-- テキストからインポート -->
 		    <a data-toggle="modal" href="#importFromText" 
-		    	class="btn btn-success">Import from Text</a><br>
+		    	class="btn btn-success btn-block">Import from Text</a>
 		    <div class="modal fade" id="importFromText">
 		        <div class="modal-dialog">
 		        	<div class="modal-content">
@@ -213,7 +213,7 @@ function toggleMirror(){
 		    </div>
 
 		    <!-- エクスポート -->
-		    <a class="btn btn-primary">Export into Text</a><br>
+		    <a class="btn btn-primary btn-block">Export into Text</a>
 
 		    <!-- キー説明 -->
 		    <div id="key_explanation" class="alert alert-info">
