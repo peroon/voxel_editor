@@ -1,0 +1,27 @@
+<h1>Listing voxeljsons</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Json</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @voxeljsons.each do |voxeljson| %>
+      <tr>
+        <td><%= voxeljson.json %></td>
+        <td><%= link_to 'Show', voxeljson %></td>
+        <td><%= link_to 'Edit', edit_voxeljson_path(voxeljson) %></td>
+        <td><%= link_to 'Destroy', voxeljson, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Voxeljson', new_voxeljson_path %>
