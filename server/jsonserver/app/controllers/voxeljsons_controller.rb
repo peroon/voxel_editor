@@ -25,6 +25,7 @@ class VoxeljsonsController < ApplicationController
   # POST /voxeljsons.json
   def create
     @voxeljson = Voxeljson.new(voxeljson_params)
+    p voxeljson_params
 
     respond_to do |format|
       if @voxeljson.save

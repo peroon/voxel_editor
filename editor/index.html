@@ -146,7 +146,7 @@ function toggleMirror(){
  
 			<!-- 投稿 -->
 			<a data-toggle="modal" href="#submitModal"
-			   id="submit_button" onClick="submitJSON()" class="btn btn-primary btn-block">Submit</a>
+			   id="submit_button" onClick="submitConfirm()" class="btn btn-primary btn-block">Submit</a>
 		    <div class="modal fade" id="submitModal">
 		        <div class="modal-dialog">
 		        	<div class="modal-content">
@@ -154,12 +154,29 @@ function toggleMirror(){
 		            		<button class="close" data-dismiss="modal">&times;</button>
 		              		<h4 class="modal-title">データをサーバにアップロードしますか？</h4>
 			            </div>
+
+			            <form 
+			            accept-charset="UTF-8" 
+			            action="http://192.168.33.10:3000/voxeljsons" 
+			            class="new_voxeljson" 
+			            id="new_voxeljson" 
+			            method="post">
+			            <div style="margin:0;padding:0;display:inline">
+			            	<input name="utf8" type="hidden" value="✓">
+			            	<input name="authenticity_token" type="hidden" value="vRFl2PUhw9v6e2gh402idJJcOlcvAsUpTz7n5nZ6+yY=">
+			            </div>
+
 			            <div class="modal-body">
-			            	データ:xxxxxxxxxxxxxxxxxxxxxxxx
-			            </div>
+				            <!-- 送信内容 -->
+						    <textarea id="submitData" name="voxeljson[json]" style="width:550px; height:400px"></textarea>
+						</div>
+
 			            <div class="modal-footer">
-				            <button class="btn btn-primary">はい</button>
-			            </div>
+							<!-- 送信ボタン -->
+						    <input class="btn btn-primary" name="commit" type="submit" value="Submit">
+						</div>
+						</form>
+
 		        	</div>
 		        </div>
 		    </div>
