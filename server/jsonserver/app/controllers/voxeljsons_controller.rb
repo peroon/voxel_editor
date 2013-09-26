@@ -1,6 +1,12 @@
 class VoxeljsonsController < ApplicationController
   before_action :set_voxeljson, only: [:show, :edit, :update, :destroy]
 
+  after_filter :set_access_control_headers
+  def set_access_control_headers 
+    headers['Access-Control-Allow-Origin'] = 'http://192.168.33.10' 
+    headers['Access-Control-Request-Method'] = '*' 
+  end
+
   # GET /voxeljsons
   # GET /voxeljsons.json
   def index
@@ -10,6 +16,8 @@ class VoxeljsonsController < ApplicationController
   # GET /voxeljsons/1
   # GET /voxeljsons/1.json
   def show
+    @voxeljson = Voxeljson.find(params[:id])
+    render :json => @voxeljson.json
   end
 
   # GET /voxeljsons/new
