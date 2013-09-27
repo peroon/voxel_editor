@@ -7,11 +7,32 @@ class VoxeljsonsController < ApplicationController
     @voxeljsons = Voxeljson.all
   end
 
+  def get_dummy_json
+    require 'json'
+    a_json = {
+      'title' => 'i am title',
+      'cubes' => 
+      [
+        '#00ff00' => [
+          {'x'=>25, 'y'=>25, 'z'=>25},
+          {'x'=>-25, 'y'=>-25, 'z'=>-25}
+        ],
+        '#ff0000' => [
+          {'x'=>125, 'y'=>125, 'z'=>125},
+          {'x'=>-125, 'y'=>-125, 'z'=>-125}
+        ]
+
+      ]
+    }
+    return JSON.generate(a_json)
+  end
+
   # GET /voxeljsons/1
   # GET /voxeljsons/1.json
   def show
     @voxeljson = Voxeljson.find(params[:id])
-    render :json => @voxeljson.json
+    render :text => 'callbackfunc(' + @voxeljson.json + ')'
+    #render :json => get_dummy_json
   end
 
   # GET /voxeljsons/new
