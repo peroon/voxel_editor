@@ -22,6 +22,7 @@ function getAxis(){
 	return parent;
 }
 
+//color = 0x00ff00
 function getCubeMaterial(color){
 	var mat = new THREE.MeshLambertMaterial( { color: color, ambient: 0x00ff80, 
 			shading: THREE.FlatShading, map: THREE.ImageUtils.loadTexture( "square-outline-textured.png" ) } );

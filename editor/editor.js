@@ -186,6 +186,24 @@ $(function(){
 		}
 	}
 
+	//ボクセルを生成しシーンに追加
+	//color = '#00ff00'
+	function makeVoxel(position_threejs, material){
+		//生成
+		var geometry = cubeGeo;
+		var voxel = new THREE.Mesh(geometry, material);
+		voxel.position.copy(position_threejs);
+		voxel.matrixAutoUpdate = false;
+		voxel.updateMatrix();
+		voxel.tag = 'cube';
+		scene.add(voxel);		
+
+		//キューブ数
+		incrementCubeNum(1);
+		//JSON
+		addToJSON(voxelPosition);
+	}
+
 	//マウス押下時
 	//キューブ生成
 	function onDocumentMouseDown(event){
@@ -227,34 +245,13 @@ $(function(){
 					g_cubeMaterial = g_selectedMaterial;
 
 					//ボクセル実体化
-					var voxel = new THREE.Mesh(cubeGeo, g_cubeMaterial);
-					voxel.position.copy(voxelPosition);
-					voxel.matrixAutoUpdate = false;
-					voxel.updateMatrix();
-					voxel.tag = 'cube';
-					scene.add(voxel);
-					//キューブ数
-					incrementCubeNum(1);
-					//JSON
-					addToJSON(voxelPosition);
+					makeVoxel(voxelPosition, g_cubeMaterial);
 
 					//ミラー
 					if(g_isMirror){
 						var mirrorPosition = voxelPosition.clone();
 						mirrorPosition.x *= -1;
-
-						//TODO 関数化
-						//ボクセル実体化
-						var voxel = new THREE.Mesh(cubeGeo, g_cubeMaterial);
-						voxel.position.copy(mirrorPosition);
-						voxel.matrixAutoUpdate = false;
-						voxel.updateMatrix();
-						voxel.tag = 'cube';
-						scene.add(voxel);
-						//キューブ数
-						incrementCubeNum(1);
-						//JSON
-						addToJSON(mirrorPosition);
+						makeVoxel(mirrorPosition, g_cubeMaterial);
 					}
 				}
 
