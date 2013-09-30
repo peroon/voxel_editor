@@ -47,3 +47,5 @@ var g_cubeJSON =
 	//位置、色の情報
 	"cubes":{}
 };
+
+var g_scene;

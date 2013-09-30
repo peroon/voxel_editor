@@ -19,11 +19,77 @@ function updateJSON(){
 	$("#ui_json").html(html_json_str);
 }
 
+//ボクセルを生成しシーンに追加
+//color = '#00ff00'
+function makeVoxel(position_threejs, material){
+	//生成
+	var geometry = new THREE.CubeGeometry(CUBE_WIDTH, CUBE_WIDTH, CUBE_WIDTH);
+	var voxel = new THREE.Mesh(geometry, material);
+	p(position_threejs);
+	p(position_threejs);
+	p(position_threejs);
+	voxel.position.copy(position_threejs);
+	voxel.matrixAutoUpdate = false;
+	voxel.updateMatrix();
+	voxel.tag = 'cube';
+	g_scene.add(voxel);		
+
+	//キューブ数
+	incrementCubeNum(1);
+	//JSON
+	addToJSON(position_threejs);
+}
+
+function addToJSON(voxelPosition){
+	var cubePosition = {};
+	//位置
+	cubePosition.x = voxelPosition.x;
+	cubePosition.y = voxelPosition.y;
+	cubePosition.z = voxelPosition.z;
+	//色
+	//#ff0000
+	var color_sharp = threeJsColor_to_sharpColor(g_cubeMaterial.color);
+	//色をインデックスとしてJSONに登録
+	//push
+	var cubePositions = g_cubeJSON.cubes[color_sharp];
+	if(cubePositions==undefined){
+		cubePositions = [];
+	}
+	cubePositions.push(cubePosition);
+	g_cubeJSON.cubes[color_sharp] = cubePositions;
+}
+function removeFromJSON(voxelPosition){
+	//色一覧
+	var color_keys = Object.keys(g_cubeJSON.cubes);
+
+	//全探索して同じ位置のデータを削除
+	for(var i=0; i<color_keys.length; i++){
+		var color_key = color_keys[i];
+		var position_array = g_cubeJSON.cubes[color_key];
+
+		for(var j=0; j<position_array.length; j++){
+			var position = position_array[j];
+
+			//同じ位置なら削除
+			if(isSamePosition(position, voxelPosition)){
+				position_array.splice(j,1);
+				//長さ0なら色ごと消す
+				if(position_array.length==0){
+					delete g_cubeJSON.cubes[color_key];
+				}else{
+					g_cubeJSON.cubes[color_key] = position_array;
+				}
+				break;
+			}
+		}
+	}
+}
+
 $(function(){
 	if(!Detector.webgl) Detector.addGetWebGLMessage();
 
 	var container, stats;
-	var scene, g_renderer;
+	var g_renderer;
 	var projector, plane, cube;
 	var mouse3D, raycaster,
 
@@ -85,19 +151,19 @@ $(function(){
 		g_camera.position.y = 800;
 
 		//シーン
-		scene = new THREE.Scene();
+		g_scene = new THREE.Scene();
 
-		scene.add(getAxis());
+		g_scene.add(getAxis());
 
 		//マウスに付いてくるキューブ
 		// roll-over helpers
 		rollOverGeo = new THREE.CubeGeometry(CUBE_WIDTH, CUBE_WIDTH, CUBE_WIDTH);
 		rollOverMaterial = new THREE.MeshBasicMaterial({ color: g_selectedColor, opacity: 0.5, transparent: true });
 		g_rollOverMesh = new THREE.Mesh(rollOverGeo, rollOverMaterial);
-		scene.add(g_rollOverMesh);
+		g_scene.add(g_rollOverMesh);
 		//ミラー用
 		g_rollOverMeshMirror = new THREE.Mesh(rollOverGeo, rollOverMaterial);
-		scene.add(g_rollOverMeshMirror);
+		g_scene.add(g_rollOverMeshMirror);
 		g_rollOverMeshMirror.visible = false;
 
 		//メッシュの色を変えるテスト
@@ -122,22 +188,22 @@ $(function(){
 		var material = new THREE.LineBasicMaterial({color: 0x000000, opacity: 0.2});
 		var line = new THREE.Line(geometry, material);
 		line.type = THREE.LinePieces;
-		scene.add(line);
+		g_scene.add(line);
 
 		//?
 		plane = new THREE.Mesh(new THREE.PlaneGeometry(1000, 1000), new THREE.MeshBasicMaterial());
 		plane.rotation.x = -Math.PI/2;
 		plane.visible = false;
-		scene.add(plane);
+		g_scene.add(plane);
 
 		g_mouse2d = new THREE.Vector3(0, 10000, 0.5);
 
 		//ライト
 		var ambientLight = new THREE.AmbientLight(0x606060);
-		scene.add(ambientLight);
+		g_scene.add(ambientLight);
 		var directionalLight = new THREE.DirectionalLight(0xffffff);
 		directionalLight.position.set(1, 0.75, 0.5).normalize();
-		scene.add(directionalLight);
+		g_scene.add(directionalLight);
 
 		//レンダラー
 		g_renderer = new THREE.WebGLRenderer({antialias: true, preserveDrawingBuffer: true});
@@ -186,24 +252,6 @@ $(function(){
 		}
 	}
 
-	//ボクセルを生成しシーンに追加
-	//color = '#00ff00'
-	function makeVoxel(position_threejs, material){
-		//生成
-		var geometry = cubeGeo;
-		var voxel = new THREE.Mesh(geometry, material);
-		voxel.position.copy(position_threejs);
-		voxel.matrixAutoUpdate = false;
-		voxel.updateMatrix();
-		voxel.tag = 'cube';
-		scene.add(voxel);		
-
-		//キューブ数
-		incrementCubeNum(1);
-		//JSON
-		addToJSON(voxelPosition);
-	}
-
 	//マウス押下時
 	//キューブ生成
 	function onDocumentMouseDown(event){
@@ -218,7 +266,7 @@ $(function(){
 				g_isMouseRightPressed = true; break;
 		}
 
-		var intersects = raycaster.intersectObjects(scene.children);
+		var intersects = raycaster.intersectObjects(g_scene.children);
 		if(event.which==MOUSE_LEFT){
 			if(intersects.length>0){
 				intersector = getRealIntersector(intersects);
@@ -232,7 +280,7 @@ $(function(){
 						removeFromJSON(voxelPosition);
 
 						//Sceneから削除
-						scene.remove( intersector.object );
+						g_scene.remove( intersector.object );
 					}
 
 				//作成
@@ -245,6 +293,7 @@ $(function(){
 					g_cubeMaterial = g_selectedMaterial;
 
 					//ボクセル実体化
+					p(voxelPosition);
 					makeVoxel(voxelPosition, g_cubeMaterial);
 
 					//ミラー
@@ -292,51 +341,6 @@ $(function(){
 		}
 	}
 
-	function addToJSON(voxelPosition){
-		var cubePosition = {};
-		//位置
-		cubePosition.x = voxelPosition.x;
-		cubePosition.y = voxelPosition.y;
-		cubePosition.z = voxelPosition.z;
-		//色
-		//#ff0000
-		var color_sharp = threeJsColor_to_sharpColor(g_cubeMaterial.color);
-		//色をインデックスとしてJSONに登録
-		//push
-		var cubePositions = g_cubeJSON.cubes[color_sharp];
-		if(cubePositions==undefined){
-			cubePositions = [];
-		}
-		cubePositions.push(cubePosition);
-		g_cubeJSON.cubes[color_sharp] = cubePositions;
-	}
-	function removeFromJSON(voxelPosition){
-		//色一覧
-		var color_keys = Object.keys(g_cubeJSON.cubes);
-
-		//全探索して同じ位置のデータを削除
-		for(var i=0; i<color_keys.length; i++){
-			var color_key = color_keys[i];
-			var position_array = g_cubeJSON.cubes[color_key];
-
-			for(var j=0; j<position_array.length; j++){
-				var position = position_array[j];
-
-				//同じ位置なら削除
-				if(isSamePosition(position, voxelPosition)){
-					position_array.splice(j,1);
-					//長さ0なら色ごと消す
-					if(position_array.length==0){
-						delete g_cubeJSON.cubes[color_key];
-					}else{
-						g_cubeJSON.cubes[color_key] = position_array;
-					}
-					break;
-				}
-			}
-		}
-	}
-
 	function isSamePosition(v0, v1){
 		if(v0.x==v1.x && v0.y==v1.y && v0.z==v1.z){
 			return true;
@@ -366,7 +370,7 @@ $(function(){
 		}
 
 		raycaster = projector.pickingRay(g_mouse2d.clone(), g_camera);
-		var intersects = raycaster.intersectObjects(scene.children);
+		var intersects = raycaster.intersectObjects(g_scene.children);
 
 		if(intersects.length>0){
 			intersector = getRealIntersector(intersects);
@@ -424,8 +428,8 @@ $(function(){
 		g_camera.position.z = g_cameraR * sin_g_theta * sin_g_phi;
 		g_camera.position.y = g_cameraR * cos_g_theta;
 
-		g_camera.lookAt(scene.position);
+		g_camera.lookAt(g_scene.position);
 
-		g_renderer.render(scene, g_camera);
+		g_renderer.render(g_scene, g_camera);
 	}
 });

@@ -1,6 +1,6 @@
 function importFromWeb(id){
 
-	id = 6
+	id = 7
 	//ajax GET
 	$.ajax({
 	    url: 'http://192.168.33.10:3000/voxeljsons/'+id,
@@ -59,4 +59,9 @@ function constructVoxels(json_object){
 function generateVoxel(x,y,z,color){
 	p('gen voxel at');
 	p([x,y,z,color]);
+
+	var position_threejs = new THREE.Vector3(x,y,z);
+	var material = getCubeMaterial(color);
+
+	makeVoxel(position_threejs, material);
 }
