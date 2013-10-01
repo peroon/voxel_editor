@@ -25,9 +25,7 @@ function makeVoxel(position_threejs, material){
 	//生成
 	var geometry = new THREE.CubeGeometry(CUBE_WIDTH, CUBE_WIDTH, CUBE_WIDTH);
 	var voxel = new THREE.Mesh(geometry, material);
-	p(position_threejs);
-	p(position_threejs);
-	p(position_threejs);
+	
 	voxel.position.copy(position_threejs);
 	voxel.matrixAutoUpdate = false;
 	voxel.updateMatrix();

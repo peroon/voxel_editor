@@ -1,6 +1,5 @@
 function importFromWeb(id){
 
-	id = 7
 	//ajax GET
 	$.ajax({
 	    url: 'http://192.168.33.10:3000/voxeljsons/'+id,
