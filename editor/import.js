@@ -64,3 +64,18 @@ function generateVoxel(x,y,z,color){
 
 	makeVoxel(position_threejs, material);
 }
+
+function prepareImportButtons(){
+	var id_array = [6,7,8,9,10];
+	var importButtons = $("#importButtons");
+	importButtons.empty();
+	for(var i=0; i<id_array.length; i++){
+		var id = id_array[i];
+		var button = $("<button>");
+		button.addClass("btn btn-primary");
+		button.text(id);
+		button.css({'margin':'2px'});
+		button.attr("onClick", "importFromWeb("+id+")");
+		importButtons.append(button);
+	}
+}

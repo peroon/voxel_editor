@@ -183,7 +183,7 @@ function toggleMirror(){
 		    </div>
 
 		    <!-- Webからインポート -->
-		    <a data-toggle="modal" href="#importFromWeb"
+		    <a data-toggle="modal" href="#importFromWeb" onClick="prepareImportButtons()"
 				class="btn btn-success btn-block">Import from Web</a>
 		    <div class="modal fade" id="importFromWeb">
 		        <div class="modal-dialog">
@@ -193,8 +193,8 @@ function toggleMirror(){
 		              		<h4 class="modal-title">Webからインポート</h4>
 			            </div>
 
-			            <div class="modal-body">
-				            <button class="btn btn-primary" onClick="importFromWeb(6)">id 6</button>
+			            <div id="importButtons" class="modal-body">
+				            <button class="btn btn-primary" onClick="importFromWeb(6)" width="100px">id 6</button>
 				            <button class="btn btn-primary" onClick="importFromWeb(7)">id 7</button>
 						</div>
 
