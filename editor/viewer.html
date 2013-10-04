@@ -1,6 +1,6 @@
 <head>
-	<title>Viewer</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="../three.js"></script>
+	<script src="http://codeorigin.jquery.com/jquery-2.0.3.js"></script>
 	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
 
 	<style>
@@ -9,49 +9,116 @@
 			padding: 2px;
 			border-radius: 15px;
 		}
+		.row{
+			background-color: yellow;
+		}
 	</style>
+
+<script>
+function p(v){
+	console.log(v);
+}
+
+//init
+$(function(){
+
+	init();
+	animate();
+
+	function init(){
+		var rowNum = 3;
+		var columnNum = 3;
+
+		var root = $("#root");
+		//行
+		for(var i=0; i<rowNum; i++){
+			var row_div = $("<div>");
+			row_div.addClass("row");
+
+			//列
+			for(var j=0; j<columnNum; j++){
+				var column_div = $("<div>");
+				column_div.css("width", "300");
+				column_div.css("height", "300");
+				column_div.css("margin", "3");
+				column_div.addClass("col-md-4");
+
+				var index = columnNum * i + j;
+				var idName = 'container' + index;
+				column_div.attr('id', idName);
+
+				row_div.append(column_div);
+			}
+
+			root.append(row_div);
+		}
+
+		//create canvases
+		for(var i=0; i<rowNum; i++){
+			for(var j=0; j<columnNum; j++){
+				var index = columnNum * i + j;
+				var idName = 'container' + index;
+				getEasyCanvas(idName);
+			}
+		}
+	}
+
+	//update
+	function animate() {
+		requestAnimationFrame(animate);
+		render();
+	}
+
+	//render
+	function render() {
+		//camera.lookAt(scene.position);
+		//renderer.render(scene, camera);
+	}
+});
+
+function getEasyCanvas(idName){
+	var w = 300;
+	var h = 300;
+	var camera = new THREE.PerspectiveCamera(45, w/h, 1, 10000);
+	camera.position.y = 800;
+
+	scene = new THREE.Scene();
+
+	var cubeW = 100;
+	var cubeGeo = new THREE.CubeGeometry(cubeW, cubeW, cubeW);
+	var material = new THREE.MeshBasicMaterial({ color: 0x0000ff, opacity: 0.5, transparent: true });
+	var mesh = new THREE.Mesh(cubeGeo, material);
+	scene.add(mesh);
+
+	//projector
+	projector = new THREE.Projector();
+
+	//light
+	var ambientLight = new THREE.AmbientLight(0x606060);
+	scene.add(ambientLight);
+	var directionalLight = new THREE.DirectionalLight(0xffffff);
+	directionalLight.position.set(1, 0.75, 0.5).normalize();
+	scene.add(directionalLight);
+
+	//レンダラー
+	var renderer = new THREE.WebGLRenderer({antialias: true, preserveDrawingBuffer: true});
+	renderer.setSize(w, h);
+
+	var container = document.getElementById(idName);
+	container.appendChild(renderer.domElement);
+
+	//仮にここで1度描画
+	camera.lookAt(scene.position);
+	renderer.render(scene, camera);
+}
+
+</script>
 </head>
 
-<h1>Viewer</h1>
+<h1>Viewer (Multi Canvas)</h1>
 
-	<!-- Grid -->
-  <div class="row">
-    <div class="col-md-4">
-    	AAAAAAAAAA<br>
-    	AAAAAAAAAA<br>
-    	AAAAAAAAAA<br>
-    </div>
-    <div class="col-md-4">
-    	AAAAAAAAAA<br>
-    	AAAAAAAAAA<br>
-    	AAAAAAAAAA<br>
-    </div>
-    <div class="col-md-4">
-    	AAAAAAAAAA<br>
-    	AAAAAAAAAA<br>
-    	AAAAAAAAAA<br>
-    </div>
-  </div>
-
-  <br>
-
-  <div class="row">
-    <div class="col-md-4">
-    	AAAAAAAAAA<br>
-    	AAAAAAAAAA<br>
-    	AAAAAAAAAA<br>
-    </div>
-    <div class="col-md-4">
-    	AAAAAAAAAA<br>
-    	AAAAAAAAAA<br>
-    	AAAAAAAAAA<br>
-    </div>
-    <div class="col-md-4">
-    	AAAAAAAAAA<br>
-    	AAAAAAAAAA<br>
-    	AAAAAAAAAA<br>
-    </div>
-  </div>
+<div id="root">
+</div>
 
 <!-- JS -->
 <script src="http://code.jquery.com/jquery.js"></script>
