@@ -10,9 +10,13 @@ function Canvas3d()
 	this.scene = new THREE.Scene();
 	var cubeW = 100;
 	var cubeGeo = new THREE.CubeGeometry(cubeW, cubeW, cubeW);
-	var material = new THREE.MeshBasicMaterial({ color: 0x0000ff, opacity: 0.5, transparent: true });
-	var mesh = new THREE.Mesh(cubeGeo, material);
-	this.scene.add(mesh);
+	var color = Math.random() * 0xffffff;
+	var material = new THREE.MeshBasicMaterial({ color: color, opacity: 0.5, transparent: true });
+	this.mesh = new THREE.Mesh(cubeGeo, material);
+	this.scene.add(this.mesh);
+
+	this.theta = 0;
+	this.rotateSpeed = 0.3 * Math.random();
 
 	//projector
 	var projector = new THREE.Projector();
@@ -27,15 +31,47 @@ function Canvas3d()
 	//レンダラー
 	this.renderer = new THREE.WebGLRenderer({antialias: true, preserveDrawingBuffer: true});
 	this.renderer.setSize(this.WIDTH, this.HEIGHT);
+};
 
-	var container = document.getElementById("root");
-	container.appendChild(this.renderer.domElement);
-
-	//仮にここで1度描画
-	this.camera.lookAt(this.scene.position);
-	this.renderer.render(this.scene, this.camera);
+Canvas3d.prototype.animate = function(){
+	console.log("animate");
 }
 
-$(function(){
-	var canvas3d = new Canvas3d();
+Canvas3d.prototype.getDOM = function(){
+	return this.renderer.domElement;
+};
+
+Canvas3d.prototype.update= function(){
+	//rotate
+	this.theta += this.rotateSpeed;
+	this.mesh.rotation.x = this.theta;
+
+	this.camera.lookAt(this.scene.position);
+	this.renderer.render(this.scene, this.camera);
+};
+
+
+
+
+
+
+
+
+function updateAll(){
+	requestAnimationFrame(updateAll);
+	for(var i=0; i<3; i++){
+		g_canvas3d_array[i].update();
+	}
+}
+
+$(function()
+{
+	g_canvas3d_array = new Array(); 
+	for(var i=0; i<3; i++){
+		var canvas3d = new Canvas3d();
+		$("#root").append(canvas3d.getDOM());
+		g_canvas3d_array.push(canvas3d);
+	}
+
+	updateAll();
 });
