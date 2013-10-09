@@ -1,0 +1,16 @@
+div#canvas{
+  position: relative;
+  width: 400px;
+  height: 400px;
+  background-color: silver;
+
+  div.block{
+    position: absolute;
+    width: 78px;
+    height: 78px;
+    border: 2px solid black;
+    background-color: pink;
+  }
+  
+}
+
